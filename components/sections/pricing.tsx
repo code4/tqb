@@ -65,6 +65,13 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
                     {displayTiers.map((tier) => {
                         const isFreeTier = tier.price === "Free" || tier.price === "$0" || tier.name.toLowerCase().includes("digital")
 
+                        // Resolve the correct CTA link from environment variables if available
+                        let finalCtaLink = tier.ctaLink
+                        if (tier.name.includes('(UK)')) finalCtaLink = process.env.NEXT_PUBLIC_STRIPE_UK_URL || finalCtaLink
+                        if (tier.name.includes('(International)')) finalCtaLink = process.env.NEXT_PUBLIC_STRIPE_INTL_URL || finalCtaLink
+
+                        const showWaitlist = isFreeTier || finalCtaLink === "#" || !finalCtaLink
+
                         return (
                             <FadeIn
                                 key={tier.name}
@@ -91,18 +98,23 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
                                     ))}
                                 </ul>
 
-                                {isFreeTier ? (
+                                {showWaitlist ? (
                                     <Dialog>
                                         <DialogTrigger asChild>
-                                            <Button variant="outline" className="w-full">
-                                                {tier.ctaText || 'Join for Free'}
+                                            <Button variant={tier.recommended ? 'primary' : 'outline'} className="w-full">
+                                                {tier.ctaText || (isFreeTier ? 'Join for Free' : 'Join Waitlist')}
                                             </Button>
                                         </DialogTrigger>
                                         <DialogContent className="sm:max-w-md">
                                             <DialogHeader>
-                                                <DialogTitle>Join our Quiet Corner</DialogTitle>
+                                                <DialogTitle>
+                                                    {isFreeTier ? 'Join our Quiet Corner' : `Join Waitlist: ${tier.name}`}
+                                                </DialogTitle>
                                                 <DialogDescription>
-                                                    Subscribe to receive our latest reflections and updates directly in your inbox.
+                                                    {isFreeTier
+                                                        ? 'Subscribe to receive our latest reflections and updates directly in your inbox.'
+                                                        : 'We are currently at capacity for this tier. Join the waitlist to be notified when spots open up.'
+                                                    }
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <div className="pt-4">
@@ -112,7 +124,9 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
                                     </Dialog>
                                 ) : (
                                     <Button asChild variant={tier.recommended ? 'primary' : 'outline'} className="w-full">
-                                        <a href={tier.ctaLink}>{tier.ctaText || 'Subscribe'}</a>
+                                        <a href={finalCtaLink} target="_blank" rel="noopener noreferrer">
+                                            {tier.ctaText || 'Subscribe'}
+                                        </a>
                                     </Button>
                                 )}
                             </FadeIn>
