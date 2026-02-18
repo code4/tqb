@@ -37,7 +37,14 @@ export function Hero({ heading, subheading, image, ctaText, ctaLink }: HeroProps
                             <div className="flex items-center gap-3 text-sm text-stone-600">
                                 <div className="flex -space-x-2">
                                     {[1, 2, 3].map((i) => (
-                                        <div key={i} className="h-8 w-8 rounded-full border-2 border-white bg-stone-200" />
+                                        <div key={i} className="relative h-8 w-8 rounded-full border-2 border-white overflow-hidden">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={`https://i.pravatar.cc/100?img=${i + 10}`}
+                                                alt="Member"
+                                                className="h-full w-full object-cover"
+                                            />
+                                        </div>
                                     ))}
                                 </div>
                                 <div className="flex flex-col leading-tight">
