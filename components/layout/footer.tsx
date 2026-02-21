@@ -30,21 +30,21 @@ export async function Footer() {
                     </div>
 
                     {/* Navigation Section */}
-                    <div className="lg:col-span-4 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-2">
-                        <div className="flex flex-col gap-4">
+                    <div className="lg:col-span-4 grid grid-cols-2 gap-8 lg:gap-8">
+                        <div className="flex flex-col items-center lg:items-start gap-4">
                             <h4 className="text-xs font-semibold uppercase tracking-widest text-stone-900">Explore</h4>
-                            <nav className="flex flex-col gap-3">
+                            <nav className="flex flex-col items-center lg:items-start gap-3">
                                 <Link href="/blog" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Blog</Link>
                                 <Link href="/about" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Manifesto</Link>
                                 <Link href="/subscribe" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Membership</Link>
                             </nav>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col items-center lg:items-start gap-4">
                             <h4 className="text-xs font-semibold uppercase tracking-widest text-stone-900">Support</h4>
-                            <nav className="flex flex-col gap-3">
+                            <nav className="flex flex-col items-center lg:items-start gap-3">
+                                <a href={process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com"} className="text-sm font-medium text-stone-900 hover:text-stone-600 transition-colors">Member Sign In</a>
                                 <Link href="/legal/privacy" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Privacy</Link>
                                 <Link href="/legal/terms" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Terms</Link>
-                                <Link href="/unsubscribe" className="text-sm text-stone-500 hover:text-stone-900 transition-colors italic">Unsubscribe</Link>
                             </nav>
                         </div>
                     </div>

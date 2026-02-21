@@ -1,5 +1,9 @@
 import { client } from "@/sanity/lib/client"
 import { NextResponse } from "next/server"
+import { Resend } from "resend"
+import { env } from "@/lib/env"
+
+const resend = new Resend(env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
     try {
@@ -9,7 +13,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Invalid email address" }, { status: 400 })
         }
 
-        // Check if already subscribed
+        // Check if already subscribed in Sanity
         const existing = await client.fetch(
             `*[_type == "subscriber" && email == $email][0]`,
             { email }
@@ -19,7 +23,21 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: "Already subscribed" }, { status: 200 })
         }
 
-        // Create new subscriber
+        // Add to Resend Audience First
+        if (env.RESEND_AUDIENCE_ID) {
+            try {
+                await resend.contacts.create({
+                    email: email,
+                    audienceId: env.RESEND_AUDIENCE_ID,
+                    unsubscribed: false,
+                })
+            } catch (resendError) {
+                console.error("Resend Audience Add Error:", resendError)
+                // We're letting this pass through even if it fails, so Sanity still captures them
+            }
+        }
+
+        // Create new subscriber in Sanity Content Lake
         await client.create({
             _type: 'subscriber',
             email,

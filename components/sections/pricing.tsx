@@ -71,50 +71,51 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
     }
 
     return (
-        <Section spacing="lg" id="pricing">
+        <Section className="py-24 md:py-32 lg:py-40 bg-stone-50" id="pricing">
             <Container>
-                <div className="mx-auto mb-16 max-w-2xl text-center">
-                    <h2 className="font-serif text-3xl font-light text-stone-900 md:text-4xl">
+                <div className="mx-auto mb-16 max-w-3xl text-center">
+                    <h2 className="font-serif text-4xl font-light text-stone-900 md:text-5xl lg:text-6xl tracking-tight">
                         {heading}
                     </h2>
                     {subheading && (
-                        <p className="mt-4 text-stone-600">{subheading}</p>
+                        <p className="mt-6 text-stone-600 text-lg md:text-xl font-light leading-relaxed">{subheading}</p>
                     )}
                 </div>
 
-                <FadeInStagger className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
+                <FadeInStagger className="flex flex-wrap justify-center gap-8 md:gap-12 max-w-7xl mx-auto">
                     {displayTiers.map((tier) => {
                         return (
                             <FadeIn
                                 key={tier.name}
-                                className="relative flex flex-col rounded-2xl border border-stone-200 bg-white p-8 shadow-sm transition-all hover:shadow-md w-full max-w-sm"
+                                className="relative flex flex-col rounded-[2rem] border border-stone-200 bg-white p-10 md:p-12 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-stone-200/50 w-full max-w-md group"
                             >
-                                <div className="mb-6">
-                                    <h3 className="text-xl font-medium text-stone-900">{tier.name}</h3>
-                                    <div className="mt-4 flex items-baseline text-stone-900">
-                                        <span className="text-4xl font-serif font-light tracking-tight">{tier.price}</span>
-                                        <span className="ml-1 text-stone-500">/month</span>
+                                <div className="mb-8">
+                                    <h3 className="text-2xl font-serif text-stone-900 group-hover:text-stone-600 transition-colors">{tier.name}</h3>
+                                    <div className="mt-6 flex items-baseline text-stone-900">
+                                        <span className="text-5xl md:text-6xl font-serif font-light tracking-tight">{tier.price}</span>
+                                        <span className="ml-2 text-stone-500 font-light">/month</span>
                                     </div>
                                 </div>
-                                <ul className="mb-8 space-y-4 flex-1">
+                                <ul className="mb-10 space-y-5 flex-1">
                                     {tier.features.map((feature) => (
                                         <li key={feature} className="flex items-start">
-                                            <Check className="mr-3 h-5 w-5 flex-shrink-0 text-stone-900" />
-                                            <span className="text-stone-600">{feature}</span>
+                                            <Check className="mr-4 h-5 w-5 flex-shrink-0 text-stone-400 group-hover:text-stone-900 transition-colors duration-500 mt-0.5" strokeWidth={1.5} />
+                                            <span className="text-stone-600 font-light leading-relaxed text-sm md:text-base">{feature}</span>
                                         </li>
                                     ))}
                                 </ul>
 
                                 <Button
-                                    variant="outline"
-                                    className="w-full"
+                                    className="w-full h-14 text-base font-light tracking-wide rounded-full text-stone-50 bg-stone-900 hover:bg-stone-800 hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-xl"
                                     onClick={() => handleSubscribe(tier.name)}
                                     disabled={loadingTier === tier.name}
                                 >
                                     {loadingTier === tier.name ? (
-                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                        <Loader2 className="h-5 w-5 animate-spin" />
                                     ) : (
-                                        tier.ctaText || 'Subscribe'
+                                        tier.name.includes('International') ? 'Join (International)' :
+                                            tier.name.includes('UK') ? 'Join (UK)' :
+                                                (tier.ctaText || 'Subscribe')
                                     )}
                                 </Button>
                             </FadeIn>

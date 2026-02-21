@@ -17,11 +17,12 @@ export default async function BlogIndexPage() {
         <main className="flex-1">
             <Section spacing="xl" className="bg-stone-50/50 min-h-[50vh]">
                 <Container>
-                    <div className="max-w-2xl mx-auto text-center mb-16">
-                        <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mb-6">
+                    <div className="max-w-3xl mx-auto flex flex-col items-center text-center mb-20">
+                        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light text-stone-900 mb-8 tracking-tight">
                             Reflections
                         </h1>
-                        <p className="text-lg text-stone-600 leading-relaxed">
+                        <div className="h-[1px] w-16 bg-stone-300 mb-8"></div>
+                        <p className="text-lg md:text-xl text-stone-600 font-light leading-relaxed max-w-xl">
                             Essays on slowing down, finding quiet, and the creative process.
                         </p>
                     </div>

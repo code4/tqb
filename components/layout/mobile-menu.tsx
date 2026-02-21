@@ -91,6 +91,12 @@ export function MobileMenu({ title, logo }: MobileMenuProps) {
                         >
                             About
                         </Link>
+                        <a
+                            href={process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com"}
+                            className="hover:text-stone-500 transition-colors"
+                        >
+                            Member Sign In
+                        </a>
                         <div className="pt-8 w-full mt-auto mb-8">
                             <Button asChild variant="primary" size="lg" className="w-full">
                                 <Link href="/subscribe" onClick={() => setIsOpen(false)}>

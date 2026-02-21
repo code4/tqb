@@ -230,7 +230,7 @@ async function seed() {
             _id: 'privacy',
             _type: 'legalPage',
             title: 'Privacy Policy',
-            slug: { _type: 'slug', current: 'privacy-policy' },
+            slug: { _type: 'slug', current: 'privacy' },
             content: [
                 {
                     _key: 'b1',
@@ -244,7 +244,7 @@ async function seed() {
             _id: 'terms',
             _type: 'legalPage',
             title: 'Terms of Service',
-            slug: { _type: 'slug', current: 'terms-of-service' },
+            slug: { _type: 'slug', current: 'terms' },
             content: [
                 {
                     _key: 'b1',

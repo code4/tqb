@@ -19,11 +19,15 @@ export default async function SuccessPage() {
     }
 
     return (
-        <Section spacing="lg" className="min-h-[80vh] flex items-center justify-center bg-stone-50/30">
+        <Section className="relative overflow-hidden min-h-[80vh] flex items-center justify-center bg-stone-50 py-24">
+            {/* Subtle background grain/gradient overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-stone-100 via-stone-50 to-stone-100 opacity-80" />
+            <div className="absolute inset-0 bg-noise opacity-[0.015] mix-blend-multiply" />
+
             <SuccessConfetti />
-            <Container>
-                <FadeIn className="mx-auto max-w-2xl w-full">
-                    <div className="relative overflow-hidden rounded-3xl bg-white px-6 py-16 sm:px-16 sm:py-24 text-center shadow-sm ring-1 ring-stone-900/5">
+            <Container className="relative z-10 text-center max-w-3xl px-4 flex flex-col items-center">
+                <FadeIn className="mx-auto w-full">
+                    <div className="relative overflow-hidden rounded-3xl bg-white/80 backdrop-blur-sm px-6 py-16 sm:px-16 sm:py-24 text-center shadow-xl shadow-stone-200/50 ring-1 ring-stone-900/5 transition-transform duration-700 hover:scale-[1.01]">
 
                         {/* Decorative circle */}
                         <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-stone-50 ring-1 ring-stone-900/10">

@@ -43,3 +43,6 @@ next-env.d.ts
 # stripe
 stripe_cli/
 stripe.zip
+
+# vercel env script output
+vercel-env.txt
