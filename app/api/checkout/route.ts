@@ -16,18 +16,28 @@ export async function POST(req: Request) {
         // since we don't know your price IDs yet, we will set up a placeholder session 
         // that you can replace with your actual Stripe Price IDs later.
 
-        // Fallback or dynamic configuration
+        let actualPriceId = priceId
+
+        // If no priceId passed, infer it from the payment link URLs
+        if (!actualPriceId) {
+            if (tier?.includes("UK")) {
+                // E.g., https://buy.stripe.com/cNidR95WpdwXdi7dUnenS00 is actually a payment link, we need the underlying Price ID
+                // Alternatively, we just extract the ID if the user provided the actual Price ID in the ENV var by mistake
+                actualPriceId = process.env.STRIPE_UK_PRICE_ID || "price_1T31N3Gm4B3XN0EEFKTzSv2s"
+            } else if (tier?.includes("International")) {
+                actualPriceId = process.env.STRIPE_INTL_PRICE_ID || "price_1T31N3Gm4B3XN0EEFKTzSv2s"
+            }
+        }
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             mode: "subscription",
             shipping_address_collection: {
-                // If it's a UK tier, we could lock it to 'GB', but since we use one route dynamically for both right now
-                // we allow a wide range. You can restrict this later if you want strict validation.
-                allowed_countries: ["GB", "US", "CA", "AU", "NZ", "IE", "FR", "DE"],
+                allowed_countries: tier?.includes("UK") ? ["GB"] : ["US", "CA", "AU", "NZ", "IE", "FR", "DE", "IT", "ES", "NL", "SE"],
             },
             line_items: [
-                {   // Test mode price fallback
-                    price: priceId || "price_1T31N3Gm4B3XN0EEFKTzSv2s",
+                {
+                    price: actualPriceId,
                     quantity: 1,
                 },
             ],
