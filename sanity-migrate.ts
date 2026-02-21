@@ -28,14 +28,13 @@ async function migrateContent() {
 
         console.log("Updating landing page content...")
 
-        // Construct the new sections based on Substack content
         const newSections = [
             {
                 _type: 'hero',
                 _key: 'hero-section',
                 enabled: true,
                 heading: 'Slow Mail For\nThe Women\nStill\nBecoming.',
-                subheading: 'A slow print club for women who are becoming. This is a quiet space for reflection — something to hold, read and sit with.',
+                subheading: 'A slow print club for women who are still becoming. A quiet sanctuary to simply be — something beautiful to hold, read, and sit with.',
                 ctaText: 'Subscribe',
                 ctaLink: '#pricing'
             },
@@ -48,22 +47,22 @@ async function migrateContent() {
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'As a girl, I loved having pen pals. I remember the quiet thrill of receiving a letter — an envelope traveled from somewhere else, carrying a life, a voice, a small piece of another world.' }]
+                        children: [{ _type: 'span', text: 'I’m an ordinary woman, and I say that with intention.' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'I’m trying to recreate that joy now. Something Slower. More Human 🌷.' }]
+                        children: [{ _type: 'span', text: 'I balance a busy career, motherhood, and the myriad of roles life demands—daughter, parent, employee, mentor. Somewhere in the beautiful fullness of all that living, I felt a quieter part of myself beginning to fade. Not lost entirely, but waiting.' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'Because somewhere between roles and responsibilities, I felt parts of myself growing quiet. This isn’t about reinvention or hustle. It’s about remembering.' }]
+                        children: [{ _type: 'span', text: 'I missed the slow thrill of receiving a real letter. An envelope traveling from somewhere else, carrying a voice, a thought, a fragment of another world. A grounding retreat from the endless notifications and the exhaustion of hustle culture.' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'Growth doesn’t always need an audience. Sometimes it just needs space 🌷' }]
+                        children: [{ _type: 'span', text: 'Because somewhere between the roles and responsibilities, I realized a vital truth: Growth doesn’t always need an audience. Sometimes, it just needs space 🌷' }]
                     }
                 ]
             },
@@ -71,22 +70,22 @@ async function migrateContent() {
                 _type: 'textBlock',
                 _key: 'what-it-is',
                 enabled: true,
-                heading: 'What it is?',
+                heading: 'What is it?',
                 content: [
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'The Quiet Bloom is a monthly letter or print club for women who want to slow down, reflect and reconnect - with themselves and with others. Each month, you’ll receive a thoughtfully curated kit designed to encourage calm, connection and gentle self expression.' }]
+                        children: [{ _type: 'span', text: 'The Quiet Bloom is a monthly print club and sanctuary for women seeking to slow down, reflect, and reconnect—both with themselves and with others. Every month, a thoughtfully curated art kit arrives at your door. It is a physical invitation to pause.' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'No Pressure. No Noise. No Rush. Just space to breathe.' }]
+                        children: [{ _type: 'span', text: 'There is no pressure to be productive. No digital noise. No rush to "fix" yourself. Just space to breathe.' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'It is not about productivity. It is not about fixing yourself. It is about the honouring the beauty of unfolding. For growth that does not require an audience. Where becoming is allowed to be quiet.' }]
+                        children: [{ _type: 'span', text: 'It is about honoring the beauty of your own unfolding. It is a reminder that you are allowed to bloom gently, privately, and entirely in your own time.' }]
                     }
                 ]
             },
@@ -99,29 +98,29 @@ async function migrateContent() {
                     {
                         _type: 'object',
                         _key: 'f1',
-                        title: 'You find joy in receiving',
-                        description: 'A physical letter in the mail.',
+                        title: 'You crave the tangible',
+                        description: 'You miss the forgotten joy of receiving physical mail that isn\'t a bill or a flyer.',
                         icon: 'Mail'
                     },
                     {
                         _type: 'object',
                         _key: 'f2',
                         title: 'You value reflection',
-                        description: 'Over performance.',
+                        description: 'You desperately want a gentle break from the relentless noise of performance and hustle.',
                         icon: 'BookOpen'
                     },
                     {
                         _type: 'object',
                         _key: 'f3',
-                        title: 'You enjoy prints and words',
-                        description: 'And believe in the beauty of small moments.',
+                        title: 'You seek quiet moments',
+                        description: 'You believe in the restorative power of art, words, and sitting with your own thoughts.',
                         icon: 'Image'
                     },
                     {
                         _type: 'object',
                         _key: 'f4',
-                        title: 'You feel you are still becoming',
-                        description: 'A monthly ritual to unfold, hold and pause.',
+                        title: 'You are still becoming',
+                        description: 'You want a dedicated monthly ritual to unfold, hold yourself, and simply pause.',
                         icon: 'Leaf'
                     }
                 ]
@@ -135,31 +134,31 @@ async function migrateContent() {
                     {
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _type: 'span', text: 'Every Quiet Bloom envelope includes:' }]
+                        children: [{ _type: 'span', text: 'Every Quiet Bloom envelope is packed slowly, with intention, and includes:' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
                         listItem: 'bullet',
-                        children: [{ _type: 'span', text: 'A5 Illustration Print' }]
+                        children: [{ _type: 'span', text: 'A beautifully crafted A5 Illustration Print' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
                         listItem: 'bullet',
-                        children: [{ _type: 'span', text: 'A Prompt Card / A Kindness Card' }]
+                        children: [{ _type: 'span', text: 'A tangible Prompt or Kindness Card for reflection' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
                         listItem: 'bullet',
-                        children: [{ _type: 'span', text: 'A Sticker' }]
+                        children: [{ _type: 'span', text: 'An exclusive Quiet Bloom Sticker' }]
                     },
                     {
                         _type: 'block',
                         style: 'normal',
                         listItem: 'bullet',
-                        children: [{ _type: 'span', text: 'A gentle note from me' }]
+                        children: [{ _type: 'span', text: 'A gentle, honest letter from me to you' }]
                     }
                 ]
             },

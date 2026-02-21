@@ -73,48 +73,169 @@ async function seed() {
         title: 'Home',
         sections: [
             {
-                _key: 'hero',
                 _type: 'hero',
+                _key: 'hero-section',
                 enabled: true,
-                heading: 'Slow Mail For The Women Still Becoming',
-                subheading: 'A slow print club for women who are becoming. This is a quiet space for reflection — something to hold, read and sit with.',
-                ctaText: 'Join the Print Club',
+                heading: 'Slow Mail For\nThe Women\nStill\nBecoming.',
+                subheading: 'A slow print club for women who are still becoming. A quiet sanctuary to simply be — something beautiful to hold, read, and sit with.',
+                ctaText: 'Subscribe',
                 ctaLink: '/subscribe',
                 image: heroImg
             },
             {
-                _key: 'philosophy',
                 _type: 'textBlock',
+                _key: 'why-this',
                 enabled: true,
-                heading: 'A Softer Place',
+                heading: 'Why this, why now',
                 content: [
                     {
-                        _key: 'b1',
                         _type: 'block',
                         style: 'normal',
-                        children: [{ _key: 's1', _type: 'span', text: 'We believe in showing up quietly. In a world that demands constant noise and hustle, The Quiet Bloom offers a gentle return to yourself. We value growth that happens gently and privately, taking small, steady steps towards who you are becoming.' }]
+                        children: [{ _type: 'span', text: 'I’m an ordinary woman, and I say that with intention.' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'I balance a busy career, motherhood, and the myriad of roles life demands—daughter, parent, employee, mentor. Somewhere in the beautiful fullness of all that living, I felt a quieter part of myself beginning to fade. Not lost entirely, but waiting.' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'I missed the slow thrill of receiving a real letter. An envelope traveling from somewhere else, carrying a voice, a thought, a fragment of another world. A grounding retreat from the endless notifications and the exhaustion of hustle culture.' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'Because somewhere between the roles and responsibilities, I realized a vital truth: Growth doesn’t always need an audience. Sometimes, it just needs space 🌷' }]
                     }
                 ]
             },
             {
-                _key: 'features',
-                _type: 'featureList',
+                _type: 'textBlock',
+                _key: 'what-it-is',
                 enabled: true,
-                heading: 'The Print Club Experience',
-                features: [
-                    { _key: 'f1', title: 'Moment of Pause', description: 'Social media is noisy. Slow mail is a quiet tap on the shoulder, inviting you to stop and breathe.', icon: 'Coffee' },
-                    { _key: 'f2', title: 'Physical Connection', description: 'Something tangible to hold. High-quality paper, beautiful art, and words that stay with you.', icon: 'Mail' },
-                    { _key: 'f3', title: 'Inner Reflection', description: 'Prompts and essays designed to help you reconnect with your inner voice and intuition.', icon: 'Feather' }
+                heading: 'What is it?',
+                content: [
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'The Quiet Bloom is a monthly print club and sanctuary for women seeking to slow down, reflect, and reconnect—both with themselves and with others. Every month, a thoughtfully curated art kit arrives at your door. It is a physical invitation to pause.' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'There is no pressure to be productive. No digital noise. No rush to "fix" yourself. Just space to breathe.' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'It is about honoring the beauty of your own unfolding. It is a reminder that you are allowed to bloom gently, privately, and entirely in your own time.' }]
+                    }
                 ]
             },
             {
-                _key: 'faq',
-                _type: 'faqSection',
+                _type: 'featureList',
+                _key: 'who-and-what',
                 enabled: true,
-                title: 'Common Questions',
+                heading: 'Who is it for?',
+                features: [
+                    {
+                        _type: 'object',
+                        _key: 'f1',
+                        title: 'You crave the tangible',
+                        description: 'You miss the forgotten joy of receiving physical mail that isn\'t a bill or a flyer.',
+                        icon: 'Mail'
+                    },
+                    {
+                        _type: 'object',
+                        _key: 'f2',
+                        title: 'You value reflection',
+                        description: 'You desperately want a gentle break from the relentless noise of performance and hustle.',
+                        icon: 'BookOpen'
+                    },
+                    {
+                        _type: 'object',
+                        _key: 'f3',
+                        title: 'You seek quiet moments',
+                        description: 'You believe in the restorative power of art, words, and sitting with your own thoughts.',
+                        icon: 'Image'
+                    },
+                    {
+                        _type: 'object',
+                        _key: 'f4',
+                        title: 'You are still becoming',
+                        description: 'You want a dedicated monthly ritual to unfold, hold yourself, and simply pause.',
+                        icon: 'Leaf'
+                    }
+                ]
+            },
+            {
+                _type: 'textBlock',
+                _key: 'what-arrives',
+                enabled: true,
+                heading: 'What arrives each month?',
+                content: [
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        children: [{ _type: 'span', text: 'Every Quiet Bloom envelope is packed slowly, with intention, and includes:' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        listItem: 'bullet',
+                        children: [{ _type: 'span', text: 'A beautifully crafted A5 Illustration Print' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        listItem: 'bullet',
+                        children: [{ _type: 'span', text: 'A tangible Prompt or Kindness Card for reflection' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        listItem: 'bullet',
+                        children: [{ _type: 'span', text: 'An exclusive Quiet Bloom Sticker' }]
+                    },
+                    {
+                        _type: 'block',
+                        style: 'normal',
+                        listItem: 'bullet',
+                        children: [{ _type: 'span', text: 'A gentle, honest letter from me to you' }]
+                    }
+                ]
+            },
+            {
+                _type: 'faqSection',
+                _key: 'faq-section',
+                enabled: true,
+                title: 'How does it work?',
                 items: [
-                    { _key: 'q1', _type: 'faq', question: 'How does the Print Club work?', answer: 'Every month, you will receive a curated selection of writing and art in your letterbox. It is a physical invitation to slow down.' },
-                    { _key: 'q2', _type: 'faq', question: 'Do you ship internationally?', answer: 'Yes, we ship to most countries. Shippings costs are calculated at checkout or included in the International tier.' }
+                    {
+                        _type: 'faq',
+                        _key: 'q1',
+                        question: 'When will my Print Club arrive?',
+                        answer: 'Once you join the Print Club, subscriptions will be sent between the 20th-31st of every month. If you sign up after the 20th of a calendar month, you will receive your first letter in the following month.'
+                    },
+                    {
+                        _type: 'faq',
+                        _key: 'q2',
+                        question: 'How long does shipping take?',
+                        answer: 'UK Print Clubs are sent via Royal Mail 2nd Class and take 1-5 days. International Print Clubs are sent Standard International and take 3-21 days. All services are untracked to keep costs low.'
+                    },
+                    {
+                        _type: 'faq',
+                        _key: 'q3',
+                        question: 'Can I cancel anytime?',
+                        answer: 'Yes, you can manage or cancel your subscription at any time via the Customer Portal link in the website footer or your email.'
+                    },
+                    {
+                        _type: 'faq',
+                        _key: 'q4',
+                        question: 'How do I contact you?',
+                        answer: 'If you have any questions, please contact me at thequietbloom.uk at gmail.com'
+                    }
                 ]
             },
             {
@@ -216,13 +337,31 @@ async function seed() {
                     _key: 'b1',
                     _type: 'block',
                     style: 'h2',
-                    children: [{ _key: 's1', _type: 'span', text: 'Our Philosophy' }]
+                    children: [{ _key: 's1', _type: 'span', text: 'Built Slowly, Alongside a Full Life' }]
                 },
                 {
                     _key: 'b2',
                     _type: 'block',
                     style: 'normal',
-                    children: [{ _key: 's2', _type: 'span', text: 'To create a softer place and slower rhythm for women rediscovering themselves quietly.' }]
+                    children: [{ _key: 's2', _type: 'span', text: 'I don’t live a slow life. I live a full one. There’s work, family, responsibility, noise — all the ordinary things that make up a grown woman’s days. And somewhere within that, there’s also a quieter part of me that didn’t want to disappear just because life became busy.' }]
+                },
+                {
+                    _key: 'b3',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's3', _type: 'span', text: 'This project wasn’t born from having loads of free time or a grand plan. It came from a feeling — that gentle ache of knowing there’s more inside us than the roles we move through each day. Daughter. Mother. Employee. Carer. The list grows, and we show up. We always do. But I missed the slower parts of myself.' }]
+                },
+                {
+                    _key: 'b4',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's4', _type: 'span', text: 'I missed how it felt to receive something physical — something that had travelled, that had been held by another human before reaching me. So The Quiet Bloom is being shaped the same way I’m living right now: slowly, imperfectly, with care.' }]
+                },
+                {
+                    _key: 'b5',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's5', _type: 'span', text: 'This space is for women like me. Women who are still becoming, even if no one is watching. Women who don’t need fixing, motivating, or reinventing — just a little room to breathe and remember themselves. If you’re building something gently too — or even just tending to something quiet inside — you’re not behind. You’re right on time.' }]
                 }
             ]
         },
@@ -235,8 +374,50 @@ async function seed() {
                 {
                     _key: 'b1',
                     _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's1', _type: 'span', text: '1. A Quiet Promise' }]
+                },
+                {
+                    _key: 'b2',
+                    _type: 'block',
                     style: 'normal',
-                    children: [{ _key: 's1', _type: 'span', text: 'We respect your privacy and handle your data with care.' }]
+                    children: [{ _key: 's2', _type: 'span', text: 'The Quiet Bloom was created as a sanctuary from the noise of the digital world. In that same spirit, we handle your personal information with the utmost respect, care, and restraint. We only collect what is absolutely necessary to deliver your letters to your door and maintain our connection with you.' }]
+                },
+                {
+                    _key: 'b3',
+                    _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's3', _type: 'span', text: '2. Information We Collect' }]
+                },
+                {
+                    _key: 'b4',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's4', _type: 'span', text: 'To send you your physical Print Club mail, we collect your name and shipping address. For digital communications and account management, we collect your email address. Payment processing is handled entirely and securely by Stripe; we never see or store your credit card details.' }]
+                },
+                {
+                    _key: 'b5',
+                    _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's5', _type: 'span', text: '3. How We Use Your Information' }]
+                },
+                {
+                    _key: 'b6',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's6', _type: 'span', text: 'Your physical address is used exclusively to mail your monthly subscription. Your email address is used to send payment receipts, shipping notifications, and our newsletter (if you have opted in). We will never sell, rent, or trade your personal information to any third party. Your details remain entirely confidential.' }]
+                },
+                {
+                    _key: 'b7',
+                    _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's7', _type: 'span', text: '4. Your Rights' }]
+                },
+                {
+                    _key: 'b8',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's8', _type: 'span', text: 'You have the right to request access to the personal data we hold about you, or ask that we delete it entirely. You can manage your subscription and communication preferences at any time via the Customer Portal link in our footer. For any privacy-related inquiries, please write to us at thequietbloom.uk@gmail.com.' }]
                 }
             ]
         },
@@ -249,8 +430,56 @@ async function seed() {
                 {
                     _key: 'b1',
                     _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's1', _type: 'span', text: '1. Welcome to the Club' }]
+                },
+                {
+                    _key: 'b2',
+                    _type: 'block',
                     style: 'normal',
-                    children: [{ _key: 's1', _type: 'span', text: 'These are the terms for participating in our community.' }]
+                    children: [{ _key: 's2', _type: 'span', text: 'By subscribing to The Quiet Bloom, you agree to these gentle terms, which are designed to ensure clarity and protect both our creative work and your experience.' }]
+                },
+                {
+                    _key: 'b3',
+                    _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's3', _type: 'span', text: '2. Subscriptions & Billing' }]
+                },
+                {
+                    _key: 'b4',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's4', _type: 'span', text: 'The Print Club is a recurring monthly subscription. You will be billed on the anniversary of your initial sign-up date. You may cancel your subscription at any time without penalty via the Customer Portal. Upon cancellation, you will receive any mail you have already paid for, but future billing will cease immediately.' }]
+                },
+                {
+                    _key: 'b5',
+                    _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's5', _type: 'span', text: '3. Shipping Timelines' }]
+                },
+                {
+                    _key: 'b6',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's6', _type: 'span', text: 'Because this is a slow mail service crafted with care, our shipping schedule is intentional. All monthly envelopes are dispatched between the 20th and 31st of the month. If you subscribe after the 20th, your first letter will be included in the following month’s batch. UK delivery takes 1-5 days post-dispatch; International delivery takes 3-21 days. We utilize untracked services to keep the subscription affordable for you.' }]
+                },
+                {
+                    _key: 'b7',
+                    _type: 'block',
+                    style: 'h3',
+                    children: [{ _key: 's7', _type: 'span', text: '4. Copyright & Intellectual Property' }]
+                },
+                {
+                    _key: 'b8',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's8', _type: 'span', text: 'All written content, essays, illustrations, and tangible art enclosed in your letter are the original intellectual property of The Quiet Bloom. They are for your personal, private enjoyment only. They may not be reproduced, scanned, sold, or distributed without explicit written permission.' }]
+                },
+                {
+                    _key: 'b9',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's9', _type: 'span', text: 'If you have any questions, please reach out thoughtfully to thequietbloom.uk@gmail.com.' }]
                 }
             ]
         }
@@ -259,53 +488,77 @@ async function seed() {
     // 5. Sample Blog Posts
     const posts = [
         {
-            _id: 'post-finding-stillness',
+            _id: 'post-finding-joy',
             _type: 'post',
-            title: 'Finding Stillness in a Noisy World',
-            slug: { _type: 'slug', current: 'finding-stillness' },
+            title: 'Finding Joy in the Making',
+            slug: { _type: 'slug', current: 'finding-joy-in-the-making' },
             publishedAt: new Date().toISOString(),
             mainImage: blogImg1,
-            excerpt: 'In a world that demands constant attention, finding a moment of quiet is an act of rebellion.',
+            excerpt: 'Deciding what feels right in the hand, not just what looks good on a screen.',
             body: [
                 {
                     _key: 'b1',
                     _type: 'block',
                     style: 'normal',
-                    children: [{ _key: 's1', _type: 'span', text: 'We live in an age of constant noise. Notifications, updates, breaking news—it all demands our attention. But stillness isn\'t just the absence of sound; it\'s the presence of self.' }]
+                    children: [{ _key: 's1', _type: 'span', text: 'Lately, my days have been filled with paper. Not just any paper — envelopes, card stocks, samples, textures. I’ve been researching, ordering, testing. Comparing finishes. Holding sheets up to the light.' }]
+                },
+                {
+                    _key: 'b2',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's1', _type: 'span', text: 'With technology, so much can be done online. Designs can be mocked up in minutes, files sent across the vendors in seconds. And yet, the physical process still asks for patience. Iterations. Waiting. Trying again. Nothing arrives perfect the first time — and perhaps that’s part of the point.' }]
+                },
+                {
+                    _key: 'b3',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's1', _type: 'span', text: 'Work, of course, continues at full pace... And yet — beneath it all — there’s this quiet spark. A creative adventure that keeps me awake in the best way. After the children are asleep, I tiptoe back into the evening to finish what I didn’t get to earlier. This is how The Quiet Bloom is being made. Slowly. With love. Growing quietly amid the fullness of an ordinary life.' }]
                 }
             ]
         },
         {
-            _id: 'post-art-of-slow-living',
+            _id: 'post-cost-of-belief',
             _type: 'post',
-            title: 'The Art of Slow Living',
-            slug: { _type: 'slug', current: 'art-of-slow-living' },
+            title: 'The Cost of Believing in Myself',
+            slug: { _type: 'slug', current: 'the-cost-of-believing-in-myself' },
             publishedAt: new Date(Date.now() - 86400000).toISOString(),
             mainImage: blogImg2,
-            excerpt: 'Slowing down isn\'t about doing less; it\'s about doing things with more intention.',
+            excerpt: 'Launching a website makes it real. It means I am no longer experimental in the safety of my home. It means this matters to me.',
             body: [
                 {
                     _key: 'b1',
                     _type: 'block',
                     style: 'normal',
-                    children: [{ _key: 's1', _type: 'span', text: 'Slow living is a choice to prioritize quality over quantity. It is about savoring the morning coffee and the ritual of reading.' }]
+                    children: [{ _key: 's1', _type: 'span', text: 'I have been circling the idea of launching a website for weeks. Not because I don’t want it. But because I understand, very clearly, what it costs. There is the visible cost — the domain name, the hosting plan. But the deeper cost is not financial. It is the cost of belief.' }]
+                },
+                {
+                    _key: 'b2',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's1', _type: 'span', text: 'I made a small decision. I stopped buying lunches at work. Not dramatically. Not as punishment. Just gently. I pack something from home. I make tea instead of purchasing another coffee. And in doing so, I create space — financial and psychological — to experiment. It is intentional investment. In creativity. In self-trust. In the quiet parts of me that do not shout but still deserve attention.' }]
+                },
+                {
+                    _key: 'b3',
+                    _type: 'block',
+                    style: 'normal',
+                    children: [{ _key: 's1', _type: 'span', text: 'Because the greater failure, I think, would be never attempting it at all. Never allowing this spark to see daylight. I am learning that believing in myself may be the most valuable investment I ever make.' }]
                 }
             ]
         },
         {
-            _id: 'post-ritual-of-tea',
+            _id: 'post-permission-to-pause',
             _type: 'post',
-            title: 'The Ritual of Tea',
-            slug: { _type: 'slug', current: 'ritual-of-tea' },
-            publishedAt: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+            title: 'Permission to Pause',
+            slug: { _type: 'slug', current: 'permission-to-pause' },
+            publishedAt: new Date(Date.now() - 172800000).toISOString(),
             mainImage: blogImg3,
-            excerpt: 'Finding peace in the simple act of preparing a cup of tea.',
+            excerpt: 'Growth doesn’t always need an audience. Sometimes it just needs space.',
             body: [
                 {
                     _key: 'b1',
                     _type: 'block',
                     style: 'normal',
-                    children: [{ _key: 's1', _type: 'span', text: 'There is a profound silence in the boiling of water. The ritual of tea is not just about the drink; it is about the pause.' }]
+                    children: [{ _key: 's1', _type: 'span', text: 'Life keeps unfolding. It is not about productivity. It is not about fixing yourself. It is about the honouring the beauty of unfolding. For growth that does not require an audience.' }]
                 }
             ]
         }
