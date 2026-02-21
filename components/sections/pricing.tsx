@@ -1,18 +1,12 @@
+"use client"
+
 import React from "react"
 import { Section } from "@/components/ui/section"
 import { Container } from "@/components/ui/container"
 import { FadeIn, FadeInStagger } from "@/components/ui/fade-in"
 import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { NewsletterForm } from "@/components/sections/newsletter-form"
+import { Check, Loader2 } from "lucide-react"
+import { useState } from "react"
 
 // Reuse types from Sanity schema or generic
 interface Tier {
@@ -31,23 +25,50 @@ interface PricingProps {
 }
 
 export function Pricing({ heading = "Membership", subheading, tiers }: PricingProps) {
-    // Fallback tiers if none provided
-    const displayTiers = tiers || [
+    // Fallback tiers if none provided, and filter out any "Free" or "Digital Reader" tiers from Sanity
+    const displayTiers = (tiers || [
         {
-            name: "Free",
-            price: "$0",
-            ctaLink: "#",
-            features: ["Weekly Newsletter", "Community Access"],
-            recommended: false
+            name: "Print Club (UK)",
+            price: "£8",
+            ctaLink: process.env.NEXT_PUBLIC_STRIPE_UK_URL || "#",
+            features: ["Monthly Physical Print Mail", "Tangible Reflection Prompts", "Exclusive Art Prints", "UK Shipping Included", "A Moment of True Pause"],
         },
         {
-            name: "Patron",
-            price: "$10",
-            ctaLink: "#",
-            features: ["Everything in Free", "Early Access", "Sticker Pack"],
-            recommended: true
+            name: "Print Club (International)",
+            price: "£11",
+            ctaLink: process.env.NEXT_PUBLIC_STRIPE_INTL_URL || "#",
+            features: ["Monthly Physical Print Mail", "Tangible Reflection Prompts", "Exclusive Art Prints", "International Shipping Included", "A Moment of True Pause"],
         }
-    ]
+    ]).filter(tier =>
+        tier.name.toLowerCase() !== 'digital reader' &&
+        tier.price.toLowerCase() !== 'free' &&
+        tier.price !== '$0' && tier.price !== '£0'
+    )
+
+    const [loadingTier, setLoadingTier] = useState<string | null>(null)
+
+    async function handleSubscribe(tierName: string) {
+        setLoadingTier(tierName)
+        try {
+            const res = await fetch("/api/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ tier: tierName }),
+            })
+
+            const data = await res.json()
+            if (data.url) {
+                window.location.href = data.url
+            } else {
+                throw new Error(data.error || "Failed to create checkout session")
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Something went wrong. Please try again.")
+        } finally {
+            setLoadingTier(null)
+        }
+    }
 
     return (
         <Section spacing="lg" id="pricing">
@@ -61,32 +82,18 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
                     )}
                 </div>
 
-                <FadeInStagger className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 max-w-7xl mx-auto">
+                <FadeInStagger className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
                     {displayTiers.map((tier) => {
-                        const isFreeTier = tier.price === "Free" || tier.price === "$0" || tier.name.toLowerCase().includes("digital")
-
-                        // Resolve the correct CTA link from environment variables if available
-                        let finalCtaLink = tier.ctaLink
-                        if (tier.name.includes('(UK)')) finalCtaLink = process.env.NEXT_PUBLIC_STRIPE_UK_URL || finalCtaLink
-                        if (tier.name.includes('(International)')) finalCtaLink = process.env.NEXT_PUBLIC_STRIPE_INTL_URL || finalCtaLink
-
-                        const showWaitlist = isFreeTier || finalCtaLink === "#" || !finalCtaLink
-
                         return (
                             <FadeIn
                                 key={tier.name}
-                                className={`relative flex flex-col rounded-2xl border p-8 shadow-sm transition-all hover:shadow-md ${tier.recommended ? 'border-stone-900 bg-stone-50' : 'border-stone-200 bg-white'}`}
+                                className="relative flex flex-col rounded-2xl border border-stone-200 bg-white p-8 shadow-sm transition-all hover:shadow-md w-full max-w-sm"
                             >
-                                {tier.recommended && (
-                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-stone-900 px-4 py-1 text-xs font-medium text-white shadow-sm">
-                                        Recommended
-                                    </div>
-                                )}
                                 <div className="mb-6">
                                     <h3 className="text-xl font-medium text-stone-900">{tier.name}</h3>
                                     <div className="mt-4 flex items-baseline text-stone-900">
                                         <span className="text-4xl font-serif font-light tracking-tight">{tier.price}</span>
-                                        {!isFreeTier && <span className="ml-1 text-stone-500">/month</span>}
+                                        <span className="ml-1 text-stone-500">/month</span>
                                     </div>
                                 </div>
                                 <ul className="mb-8 space-y-4 flex-1">
@@ -98,37 +105,18 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
                                     ))}
                                 </ul>
 
-                                {showWaitlist ? (
-                                    <Dialog>
-                                        <DialogTrigger asChild>
-                                            <Button variant={tier.recommended ? 'primary' : 'outline'} className="w-full">
-                                                {tier.ctaText || (isFreeTier ? 'Join for Free' : 'Join Waitlist')}
-                                            </Button>
-                                        </DialogTrigger>
-                                        <DialogContent className="sm:max-w-md">
-                                            <DialogHeader>
-                                                <DialogTitle>
-                                                    {isFreeTier ? 'Join our Quiet Corner' : `Join Waitlist: ${tier.name}`}
-                                                </DialogTitle>
-                                                <DialogDescription>
-                                                    {isFreeTier
-                                                        ? 'Subscribe to receive our latest reflections and updates directly in your inbox.'
-                                                        : 'We are currently at capacity for this tier. Join the waitlist to be notified when spots open up.'
-                                                    }
-                                                </DialogDescription>
-                                            </DialogHeader>
-                                            <div className="pt-4">
-                                                <NewsletterForm />
-                                            </div>
-                                        </DialogContent>
-                                    </Dialog>
-                                ) : (
-                                    <Button asChild variant={tier.recommended ? 'primary' : 'outline'} className="w-full">
-                                        <a href={finalCtaLink} target="_blank" rel="noopener noreferrer">
-                                            {tier.ctaText || 'Subscribe'}
-                                        </a>
-                                    </Button>
-                                )}
+                                <Button
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={() => handleSubscribe(tier.name)}
+                                    disabled={loadingTier === tier.name}
+                                >
+                                    {loadingTier === tier.name ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : (
+                                        tier.ctaText || 'Subscribe'
+                                    )}
+                                </Button>
                             </FadeIn>
                         )
                     })}
