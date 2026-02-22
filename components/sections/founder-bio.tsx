@@ -6,6 +6,7 @@ import { PortableText } from "@/components/portable-text"
 import { urlFor } from "@/sanity/lib/image"
 
 interface FounderBioProps {
+    heading?: string
     name: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     image: any
@@ -13,9 +14,8 @@ interface FounderBioProps {
     bio: any
 }
 
-export function FounderBio({ name, image, bio }: FounderBioProps) {
-    const isNote = name.toLowerCase().includes('note from')
-    const displayHeading = isNote ? 'The Founder' : `About ${name}`
+export function FounderBio({ heading, name, image, bio }: FounderBioProps) {
+    const displayHeading = heading || name
 
     return (
         <Section spacing="xl" className="bg-stone-50 border-t border-stone-100">

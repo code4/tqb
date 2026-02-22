@@ -140,8 +140,9 @@ export const landingPage = defineType({
                     title: 'Founder Bio',
                     fields: [
                         { name: 'enabled', type: 'boolean', title: 'Enabled', initialValue: true },
+                        { name: 'heading', type: 'string', title: 'Heading (e.g., About The Founder)' },
                         { name: 'image', type: 'image', title: 'Image', options: { hotspot: true } },
-                        { name: 'name', type: 'string', title: 'Name' },
+                        { name: 'name', type: 'string', title: 'Name (Signoff at bottom)' },
                         { name: 'bio', type: 'blockContent', title: 'Bio' },
                     ],
                 },
