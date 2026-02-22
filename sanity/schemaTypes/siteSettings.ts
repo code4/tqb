@@ -52,5 +52,68 @@ export const siteSettings = defineType({
             type: 'array',
             of: [{ type: 'string' }],
         }),
+        defineField({
+            name: 'footer',
+            title: 'Footer Settings',
+            type: 'object',
+            fields: [
+                {
+                    name: 'brandDescription',
+                    title: 'Brand Description',
+                    type: 'text',
+                    description: 'The short blurb below the logo/title in the footer.',
+                },
+                {
+                    name: 'exploreLinks',
+                    title: 'Explore Links',
+                    type: 'array',
+                    of: [
+                        {
+                            type: 'object',
+                            fields: [
+                                { name: 'label', type: 'string', title: 'Label' },
+                                { name: 'url', type: 'string', title: 'URL' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    name: 'supportLinks',
+                    title: 'Support Links',
+                    type: 'array',
+                    of: [
+                        {
+                            type: 'object',
+                            fields: [
+                                { name: 'label', type: 'string', title: 'Label' },
+                                { name: 'url', type: 'string', title: 'URL (e.g., /legal/privacy)' },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    name: 'newsletterHeading',
+                    title: 'Newsletter Heading',
+                    type: 'string',
+                },
+                {
+                    name: 'newsletterDescription',
+                    title: 'Newsletter Description',
+                    type: 'text',
+                },
+                {
+                    name: 'contactEmail',
+                    title: 'Contact Email',
+                    type: 'string',
+                    description: 'Email address for the contact link (e.g., hello@thequietbloom.com). Leave empty to hide.',
+                },
+                {
+                    name: 'contactText',
+                    title: 'Contact Text',
+                    type: 'string',
+                    description: 'Short text to display above the email link (e.g., Have a question?).',
+                }
+            ],
+        }),
     ],
 })

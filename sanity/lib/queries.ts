@@ -5,10 +5,18 @@ export const siteSettingsQuery = defineQuery(`
     ...,
     logo { asset->, hotspot, crop },
     ogImage { asset->, hotspot, crop },
-    socialLinks[] { platform, url }
+    socialLinks[] { platform, url },
+    footer {
+      brandDescription,
+      exploreLinks[] { label, url },
+      supportLinks[] { label, url },
+      newsletterHeading,
+      newsletterDescription,
+      contactEmail,
+      contactText
+    }
   }
 `)
-
 export const landingPageQuery = defineQuery(`
   *[_type == "landingPage"][0] {
     ...,
