@@ -103,8 +103,23 @@ export const landingPage = defineType({
                         { name: 'enabled', type: 'boolean', title: 'Enabled', initialValue: true },
                         { name: 'heading', type: 'string', title: 'Heading' },
                         { name: 'subheading', type: 'text', title: 'Subheading' },
-                        // pricing cards are managed in subscribePage or hardcoded/simple here
-                        // For now keep it simple, maybe just a text to redirect or similar
+                        {
+                            name: 'tiers',
+                            title: 'Pricing Tiers',
+                            type: 'array',
+                            of: [
+                                {
+                                    type: 'object',
+                                    fields: [
+                                        { name: 'name', type: 'string', title: 'Tier Name' },
+                                        { name: 'price', type: 'string', title: 'Price (Display)' },
+                                        { name: 'ctaText', type: 'string', title: 'CTA Button Text' },
+                                        { name: 'features', type: 'array', of: [{ type: 'string' }] },
+                                        { name: 'recommended', type: 'boolean', title: 'Recommended' },
+                                    ],
+                                },
+                            ],
+                        }
                     ],
                 },
                 // 7. Latest Posts

@@ -35,7 +35,11 @@ export const landingPageQuery = defineQuery(`
         items[]
       },
       _type == 'pricing' => {
-        ...
+        ...,
+        tiers[] {
+          ...,
+          features[]
+        }
       },
       _type == 'latestPosts' => {
         ...
