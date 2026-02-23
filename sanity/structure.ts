@@ -21,9 +21,7 @@ export const structure: StructureResolver = (S) =>
             S.listItem()
                 .title('Welcome Email')
                 .child(S.document().schemaType('welcomeEmail').documentId('welcomeEmail')),
-            S.listItem()
-                .title('Renewal Email')
-                .child(S.document().schemaType('renewalEmail').documentId('renewalEmail')),
+
             S.listItem()
                 .title('Unsubscribed Email')
                 .child(S.document().schemaType('unsubscribedEmail').documentId('unsubscribedEmail')),
@@ -31,7 +29,7 @@ export const structure: StructureResolver = (S) =>
             // Content Types
             ...S.documentTypeListItems().filter(
                 (listItem) =>
-                    !['siteSettings', 'landingPage', 'subscribePage', 'successPage', 'welcomeEmail', 'renewalEmail', 'unsubscribedEmail'].includes(
+                    !['siteSettings', 'landingPage', 'subscribePage', 'successPage', 'welcomeEmail', 'unsubscribedEmail'].includes(
                         listItem.getId() as string
                     )
             ),

@@ -5,7 +5,7 @@ import { env } from "@/lib/env"
 import { client } from "@/sanity/lib/client"
 import { Resend } from "resend"
 import WelcomeEmail from "@/emails/welcome"
-import RenewalEmail from "@/emails/renewal"
+
 import UnsubscribedEmail from "@/emails/unsubscribed"
 
 const stripe = new Stripe(env.STRIPE_SECRET_KEY || "", {
@@ -134,52 +134,7 @@ export async function POST(req: Request) {
                 break
             }
 
-            case "invoice.paid": {
-                const invoice = event.data.object as Stripe.Invoice
 
-                // Ignore the very first invoice since the welcome email handles that
-                if (invoice.billing_reason === 'subscription_create') {
-                    break
-                }
-
-                const customerEmail = invoice.customer_email
-                if (!customerEmail) break
-
-                // 1. Fetch Renewal Content from Sanity
-                let emailContent = {
-                    subject: "Your Quiet Bloom Envelope is Being Prepared",
-                    heading: "Thank you for another month of patronage.",
-                    bodyText: "Your subscription has successfully renewed. We are currently curating this month's selections and will be dispatching your envelope shortly.\n\nAs always, we hope it brings a moment of quiet reflection to your day.",
-                    signoff: "Warmly,\nThe Quiet Bloom",
-                }
-
-                if (env.SANITY_API_TOKEN) {
-                    try {
-                        const fetchedContent = await client.fetch(`*[_type == "renewalEmail"][0]`)
-                        if (fetchedContent) {
-                            emailContent = { ...emailContent, ...fetchedContent }
-                        }
-                    } catch (err) { }
-                }
-
-                // 2. Send Renewal Email via Resend
-                if (env.RESEND_API_KEY) {
-                    await resend.emails.send({
-                        from: "The Quiet Bloom <hello@thequietbloom.co.uk>",
-                        to: [customerEmail],
-                        subject: emailContent.subject,
-                        react: RenewalEmail({
-                            email: customerEmail,
-                            heading: emailContent.heading,
-                            bodyText: emailContent.bodyText,
-                            signoff: emailContent.signoff,
-                        }),
-                    })
-                    console.log(`✉️ Automated Renewal Email sent to ${customerEmail}`)
-                }
-
-                break
-            }
 
             case "customer.subscription.deleted": {
                 const subscription = event.data.object as Stripe.Subscription
