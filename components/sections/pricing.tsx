@@ -22,9 +22,10 @@ interface PricingProps {
     heading?: string
     subheading?: string
     tiers?: Tier[]
+    className?: string
 }
 
-export function Pricing({ heading = "Membership", subheading, tiers }: PricingProps) {
+export function Pricing({ heading = "Membership", subheading, tiers, className }: PricingProps) {
     // Fallback tiers if none provided, and filter out any "Free" or "Digital Reader" tiers from Sanity
     const displayTiers = (tiers || [
         {
@@ -71,16 +72,20 @@ export function Pricing({ heading = "Membership", subheading, tiers }: PricingPr
     }
 
     return (
-        <Section className="py-24 md:py-32 lg:py-40 bg-stone-50" id="pricing">
+        <Section className={className || "py-24 md:py-32 lg:py-40 bg-stone-50"} id="pricing">
             <Container>
-                <div className="mx-auto mb-16 max-w-3xl text-center">
-                    <h2 className="font-serif text-4xl font-light text-stone-900 md:text-5xl lg:text-6xl tracking-tight">
-                        {heading}
-                    </h2>
-                    {subheading && (
-                        <p className="mt-6 text-stone-600 text-lg md:text-xl font-light leading-relaxed">{subheading}</p>
-                    )}
-                </div>
+                {(heading || subheading) && (
+                    <div className="mx-auto mb-16 max-w-3xl text-center">
+                        {heading && (
+                            <h2 className="font-serif text-4xl font-light text-stone-900 md:text-5xl lg:text-6xl tracking-tight">
+                                {heading}
+                            </h2>
+                        )}
+                        {subheading && (
+                            <p className="mt-6 text-stone-600 text-lg md:text-xl font-light leading-relaxed">{subheading}</p>
+                        )}
+                    </div>
+                )}
 
                 <FadeInStagger className="flex flex-wrap justify-center gap-8 md:gap-12 max-w-7xl mx-auto">
                     {displayTiers.map((tier) => {

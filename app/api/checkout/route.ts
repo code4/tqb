@@ -32,6 +32,30 @@ export async function POST(req: Request) {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             mode: "subscription",
+            custom_fields: [
+                {
+                    key: "birthdaymonth",
+                    label: { type: "custom", custom: "Birthday Month" },
+                    type: "dropdown",
+                    optional: true,
+                    dropdown: {
+                        options: [
+                            { label: "January", value: "january" },
+                            { label: "February", value: "february" },
+                            { label: "March", value: "march" },
+                            { label: "April", value: "april" },
+                            { label: "May", value: "may" },
+                            { label: "June", value: "june" },
+                            { label: "July", value: "july" },
+                            { label: "August", value: "august" },
+                            { label: "September", value: "september" },
+                            { label: "October", value: "october" },
+                            { label: "November", value: "november" },
+                            { label: "December", value: "december" },
+                        ],
+                    },
+                },
+            ],
             shipping_address_collection: {
                 allowed_countries: tier?.includes("UK") ? ["GB"] : ["US", "CA", "AU", "NZ", "IE", "FR", "DE", "IT", "ES", "NL", "SE"],
             },

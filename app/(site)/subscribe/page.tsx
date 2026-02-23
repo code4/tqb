@@ -29,16 +29,16 @@ export default async function SubscribePage() {
 
     return (
         <div className="flex flex-col">
-            <div className="relative overflow-hidden bg-stone-50 py-24 md:py-32 lg:py-40">
+            <div className="relative overflow-hidden bg-stone-50 pt-16 md:pt-24 lg:pt-32 pb-8 md:pb-12">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-stone-100 via-stone-50 to-stone-100 opacity-80" />
                 <div className="absolute inset-0 bg-noise opacity-[0.015] mix-blend-multiply" />
 
                 <Container className="relative z-10 text-center max-w-4xl px-4 flex flex-col items-center">
-                    <h1 className="font-serif text-5xl font-light tracking-tight text-stone-900 md:text-6xl lg:text-7xl mb-8">
+                    <h1 className="font-serif text-5xl font-light tracking-tight text-stone-900 md:text-6xl lg:text-7xl mb-6">
                         {data.title}
                     </h1>
                     {/* Elegant boutique divider */}
-                    <div className="h-[1px] w-16 bg-stone-300 mb-8"></div>
+                    <div className="h-[1px] w-16 bg-stone-300 mb-6"></div>
                     {data.description && (
                         <p className="text-lg md:text-2xl text-stone-600 font-light leading-[1.8] max-w-2xl mx-auto">
                             {data.description}
@@ -47,7 +47,7 @@ export default async function SubscribePage() {
                 </Container>
             </div>
 
-            <Pricing heading="" tiers={data.tiers} />
+            <Pricing heading="" tiers={data.tiers} className="pb-24 md:pb-32 lg:pb-40 bg-stone-50 pt-0" />
         </div>
     )
 }
