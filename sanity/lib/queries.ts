@@ -6,6 +6,9 @@ export const siteSettingsQuery = defineQuery(`
     logo { asset->, hotspot, crop },
     ogImage { asset->, hotspot, crop },
     socialLinks[] { platform, url },
+    mainMenu[] { label, url },
+    mobileMenu[] { label, url },
+    subscribeButtonText,
     footer {
       brandDescription,
       exploreLinks[] { label, url },

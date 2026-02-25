@@ -4,21 +4,29 @@ export const siteSettings = defineType({
     name: 'siteSettings',
     title: 'Site Settings',
     type: 'document',
+    groups: [
+        { name: 'general', title: 'General', default: true },
+        { name: 'navigation', title: 'Navigation' },
+        { name: 'footer', title: 'Footer' },
+    ],
     fields: [
         defineField({
             name: 'title',
             title: 'Site Title',
             type: 'string',
+            group: 'general',
         }),
         defineField({
             name: 'description',
             title: 'Site Description',
             type: 'text',
+            group: 'general',
         }),
         defineField({
             name: 'logo',
             title: 'Logo',
             type: 'image',
+            group: 'general',
             options: {
                 hotspot: true,
             },
@@ -27,6 +35,7 @@ export const siteSettings = defineType({
             name: 'ogImage',
             title: 'Open Graph Image',
             type: 'image',
+            group: 'general',
             description: 'Displayed on social media shares (1200x630px).',
             options: {
                 hotspot: true,
@@ -36,6 +45,7 @@ export const siteSettings = defineType({
             name: 'socialLinks',
             title: 'Social Links',
             type: 'array',
+            group: 'general',
             of: [
                 {
                     type: 'object',
@@ -50,12 +60,54 @@ export const siteSettings = defineType({
             name: 'seoKeywords',
             title: 'SEO Keywords',
             type: 'array',
+            group: 'general',
             of: [{ type: 'string' }],
+        }),
+        defineField({
+            name: 'mainMenu',
+            title: 'Main Menu (Desktop)',
+            type: 'array',
+            group: 'navigation',
+            description: 'Links that appear in the top header on desktop devices.',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        { name: 'label', type: 'string', title: 'Label' },
+                        { name: 'url', type: 'string', title: 'URL' },
+                    ],
+                },
+            ],
+        }),
+        defineField({
+            name: 'mobileMenu',
+            title: 'Mobile Menu',
+            type: 'array',
+            group: 'navigation',
+            description: 'Links that appear inside the hamburger menu on mobile devices.',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        { name: 'label', type: 'string', title: 'Label' },
+                        { name: 'url', type: 'string', title: 'URL' },
+                    ],
+                },
+            ],
+        }),
+        defineField({
+            name: 'subscribeButtonText',
+            title: 'Subscribe Button Text',
+            type: 'string',
+            group: 'navigation',
+            description: 'Text for the primary CTA button in the header (e.g., "Subscribe" or "Subscribe Now").',
+            initialValue: 'Subscribe',
         }),
         defineField({
             name: 'footer',
             title: 'Footer Settings',
             type: 'object',
+            group: 'footer',
             fields: [
                 {
                     name: 'brandDescription',

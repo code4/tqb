@@ -40,23 +40,35 @@ export async function Header() {
                     </span>
                 </Link>
                 <nav className="hidden md:flex items-center gap-8">
-                    <Link href="/blog" className="relative text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 group">
-                        Blog
-                        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-900 transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                    <Link href="/about" className="relative text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 group">
-                        About
-                        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-900 transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                    <a href={process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com"} className="relative text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 group">
-                        Sign In
-                        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-900 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
+                    {/* Fallback if no main menu items are set in Sanity yet */}
+                    {(settings?.mainMenu || [
+                        { label: 'Blog', url: '/blog' },
+                        { label: 'About', url: '/about' },
+                        // { label: 'Sign In', url: process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com" }
+                    ]).map((link: any, idx: number) => (
+                        link.url.startsWith('http') ? (
+                            <a key={idx} href={link.url} className="relative text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 group">
+                                {link.label}
+                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-900 transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        ) : (
+                            <Link key={idx} href={link.url} className="relative text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 group">
+                                {link.label}
+                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-900 transition-all duration-300 group-hover:w-full"></span>
+                            </Link>
+                        )
+                    ))}
+
                     <Button asChild variant="primary" size="sm" className="transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-stone-900/20 active:translate-y-0">
-                        <Link href="/subscribe">Subscribe</Link>
+                        <Link href="/subscribe">{settings?.subscribeButtonText || "Subscribe"}</Link>
                     </Button>
                 </nav>
-                <MobileMenu title={title} logo={logo} />
+                <MobileMenu
+                    title={title}
+                    logo={logo}
+                    menuItems={settings?.mobileMenu}
+                    subscribeText={settings?.subscribeButtonText}
+                />
             </Container>
         </header>
     )

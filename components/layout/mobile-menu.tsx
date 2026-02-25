@@ -18,10 +18,20 @@ interface MobileMenuProps {
     title: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logo?: any
+    menuItems?: { label: string, url: string }[]
+    subscribeText?: string
 }
 
-export function MobileMenu({ title, logo }: MobileMenuProps) {
+export function MobileMenu({ title, logo, menuItems, subscribeText = "Subscribe Now" }: MobileMenuProps) {
     const [isOpen, setIsOpen] = useState(false)
+
+    // Fallback if no menu items are set in Sanity yet
+    const links = menuItems && menuItems.length > 0 ? menuItems : [
+        { label: "Home", url: "/" },
+        { label: "Blog", url: "/blog" },
+        { label: "About", url: "/about" },
+        { label: "Manage Subscriptions", url: process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com" },
+    ]
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -70,37 +80,20 @@ export function MobileMenu({ title, logo }: MobileMenuProps) {
                     </div>
 
                     <nav className="flex flex-col items-start gap-8 p-8 sm:p-12 text-2xl font-serif font-light overflow-y-auto flex-1 bg-[#fdfcfb]">
-                        <Link
-                            href="/"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-stone-500 transition-colors"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            href="/blog"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-stone-500 transition-colors"
-                        >
-                            Blog
-                        </Link>
-                        <Link
-                            href="/about"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-stone-500 transition-colors"
-                        >
-                            About
-                        </Link>
-                        <a
-                            href={process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com"}
-                            className="hover:text-stone-500 transition-colors"
-                        >
-                            Member Sign In
-                        </a>
+                        {links.map((link, idx) => (
+                            <Link
+                                key={idx}
+                                href={link.url}
+                                onClick={() => setIsOpen(false)}
+                                className="hover:text-stone-500 transition-colors"
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
                         <div className="pt-8 w-full mt-auto mb-8">
                             <Button asChild variant="primary" size="lg" className="w-full">
                                 <Link href="/subscribe" onClick={() => setIsOpen(false)}>
-                                    Subscribe Now
+                                    {subscribeText}
                                 </Link>
                             </Button>
                         </div>
