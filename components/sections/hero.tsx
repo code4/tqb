@@ -33,7 +33,7 @@ export function Hero({ heading, subheading, image, ctaText, ctaLink }: HeroProps
 
                         {subheading && (
                             <p className="mt-8 text-lg text-stone-600 sm:text-xl max-w-lg leading-[1.8] font-light">
-                                A slow print club for women who are becoming. This is a quiet space for reflection — something to hold, read and sit with.
+                                {subheading}
                             </p>
                         )}
 
