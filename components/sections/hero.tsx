@@ -42,25 +42,6 @@ export function Hero({ heading, subheading, image, ctaText, ctaLink }: HeroProps
                                 <Button asChild size="lg" className="transition-all hover:-translate-y-1 active:scale-95 duration-500 shadow-xl shadow-stone-300/40 bg-stone-900 text-stone-50 px-10 h-14 text-lg font-light rounded-sm">
                                     <Link href={ctaLink}>{ctaText}</Link>
                                 </Button>
-
-                                <div className="flex items-center gap-4 text-sm text-stone-500 font-medium pt-4">
-                                    <div className="flex -space-x-3">
-                                        {[1, 2, 3].map((i) => (
-                                            <div key={i} className="relative h-10 w-10 rounded-full border-[3px] border-stone-50 shadow-sm overflow-hidden transform transition-transform hover:scale-110 duration-300 z-10">
-                                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                <img
-                                                    src={`https://i.pravatar.cc/100?img=${i + 15}`}
-                                                    alt="Member"
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="flex flex-col text-left leading-snug">
-                                        <span className="text-stone-900 tracking-wide">Join 1,200+ members</span>
-                                        <span className="text-xs text-stone-400 font-light">Finding their quiet place</span>
-                                    </div>
-                                </div>
                             </div>
                         )}
                     </FadeIn>
