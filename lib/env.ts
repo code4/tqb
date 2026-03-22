@@ -17,6 +17,7 @@ const envSchema = z.object({
     STRIPE_INTL_PRICE_ID: z.string().optional(),
     RESEND_API_KEY: z.string().optional(),
     RESEND_AUDIENCE_ID: z.string().optional(),
+    RESEND_PAID_AUDIENCE_ID: z.string().optional(),
 })
 
 export const env = envSchema.parse({
@@ -36,4 +37,5 @@ export const env = envSchema.parse({
     STRIPE_INTL_PRICE_ID: process.env.STRIPE_INTL_PRICE_ID,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     RESEND_AUDIENCE_ID: process.env.RESEND_AUDIENCE_ID,
+    RESEND_PAID_AUDIENCE_ID: process.env.RESEND_PAID_AUDIENCE_ID,
 })

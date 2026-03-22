@@ -7,6 +7,8 @@ import { FadeIn, FadeInStagger } from "@/components/ui/fade-in"
 import { Button } from "@/components/ui/button"
 import { Check, Loader2 } from "lucide-react"
 import { useState } from "react"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { NewsletterForm } from "@/components/sections/newsletter-form"
 
 // Reuse types from Sanity schema or generic
 interface Tier {
@@ -27,7 +29,13 @@ interface PricingProps {
 
 export function Pricing({ heading = "Membership", subheading, tiers, className }: PricingProps) {
     // Fallback tiers if none provided, and filter out any "Free" or "Digital Reader" tiers from Sanity
-    const displayTiers = (tiers || [
+    const displayTiers = (tiers && tiers.length > 0 ? tiers : [
+        {
+            name: "Digital Reader",
+            price: "Free",
+            ctaLink: "#",
+            features: ["Monthly Digital Letters", "Updates on New Releases", "A Quiet Space in Your Inbox", "Digital Reflection Prompts"],
+        },
         {
             name: "Print Club (UK)",
             price: "£8",
@@ -40,11 +48,7 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
             ctaLink: process.env.NEXT_PUBLIC_STRIPE_INTL_URL || "#",
             features: ["Monthly Physical Print Mail", "Tangible Reflection Prompts", "Exclusive Art Prints", "International Shipping Included", "A Moment of True Pause"],
         }
-    ]).filter(tier =>
-        tier.name.toLowerCase() !== 'digital reader' &&
-        tier.price.toLowerCase() !== 'free' &&
-        tier.price !== '$0' && tier.price !== '£0'
-    )
+    ])
 
     const [loadingTier, setLoadingTier] = useState<string | null>(null)
 
@@ -110,19 +114,42 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
                                     ))}
                                 </ul>
 
-                                <Button
-                                    className="w-full h-14 text-base font-light tracking-wide rounded-full text-stone-50 bg-stone-900 hover:bg-stone-800 hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-xl"
-                                    onClick={() => handleSubscribe(tier.name)}
-                                    disabled={loadingTier === tier.name}
-                                >
-                                    {loadingTier === tier.name ? (
-                                        <Loader2 className="h-5 w-5 animate-spin" />
-                                    ) : (
-                                        tier.name.includes('International') ? 'Join (International)' :
-                                            tier.name.includes('UK') ? 'Join (UK)' :
-                                                (tier.ctaText || 'Subscribe')
-                                    )}
-                                </Button>
+                                {tier.price.toLowerCase() === 'free' || tier.price === '£0' || tier.price === '$0' ? (
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Button
+                                                className="w-full h-14 text-base font-light tracking-wide rounded-full text-stone-50 bg-stone-900 hover:bg-stone-800 hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-xl"
+                                            >
+                                                {tier.ctaText || 'Join (Free)'}
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="sm:max-w-md bg-stone-50 border-stone-200">
+                                            <DialogHeader>
+                                                <DialogTitle className="font-serif text-2xl font-light text-stone-900">Become a Digital Reader</DialogTitle>
+                                                <DialogDescription className="text-stone-500 font-light text-base mt-2">
+                                                    Join our quiet corner of the internet. We send occasional, thoughtful newsletters and updates on new print releases.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <div className="flex flex-col items-center py-6">
+                                                <NewsletterForm />
+                                            </div>
+                                        </DialogContent>
+                                    </Dialog>
+                                ) : (
+                                    <Button
+                                        className="w-full h-14 text-base font-light tracking-wide rounded-full text-stone-50 bg-stone-900 hover:bg-stone-800 hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-xl"
+                                        onClick={() => handleSubscribe(tier.name)}
+                                        disabled={loadingTier === tier.name}
+                                    >
+                                        {loadingTier === tier.name ? (
+                                            <Loader2 className="h-5 w-5 animate-spin" />
+                                        ) : (
+                                            tier.name.includes('International') ? 'Join (International)' :
+                                                tier.name.includes('UK') ? 'Join (UK)' :
+                                                    (tier.ctaText || 'Subscribe')
+                                        )}
+                                    </Button>
+                                )}
                             </FadeIn>
                         )
                     })}

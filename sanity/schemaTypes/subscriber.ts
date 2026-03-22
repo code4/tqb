@@ -25,6 +25,18 @@ export const subscriber = defineType({
             initialValue: 'active',
         }),
         defineField({
+            name: 'tier',
+            title: 'Subscriber Tier',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Free (Digital Reader)', value: 'free' },
+                    { title: 'Paid (Print Club)', value: 'paid' },
+                ],
+            },
+            initialValue: 'free',
+        }),
+        defineField({
             name: 'signedUpAt',
             title: 'Signed Up At',
             type: 'datetime',
@@ -34,7 +46,7 @@ export const subscriber = defineType({
     preview: {
         select: {
             title: 'email',
-            subtitle: 'status',
+            subtitle: 'tier',
         },
     },
 })

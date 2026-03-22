@@ -89,13 +89,14 @@ export async function POST(req: Request) {
                     }
 
                     // Add to Resend Audience
-                    if (env.RESEND_AUDIENCE_ID) {
+                    const targetAudienceId = env.RESEND_PAID_AUDIENCE_ID || env.RESEND_AUDIENCE_ID
+                    if (targetAudienceId) {
                         try {
                             await resend.contacts.create({
                                 email: customerEmail,
                                 firstName: session.customer_details?.name?.split(' ')[0] || "",
                                 lastName: session.customer_details?.name?.split(' ').slice(1).join(' ') || "",
-                                audienceId: env.RESEND_AUDIENCE_ID,
+                                audienceId: targetAudienceId,
                                 unsubscribed: false,
                             })
                             console.log(`👥 Added ${customerEmail} to Resend Audience.`)
@@ -103,7 +104,7 @@ export async function POST(req: Request) {
                             console.error(`❌ Failed to add ${customerEmail} to Resend Audience:`, contactErr)
                         }
                     } else {
-                        console.warn("⚠️ RESEND_AUDIENCE_ID is not set. Skipping audience sync.")
+                        console.warn("⚠️ Neither RESEND_PAID_AUDIENCE_ID nor RESEND_AUDIENCE_ID is set. Skipping audience sync.")
                     }
                 } else {
                     console.warn("⚠️ RESEND_API_KEY is not set. Skipping Welcome Email.")
@@ -121,6 +122,7 @@ export async function POST(req: Request) {
                             _type: 'subscriber',
                             email: customerEmail,
                             status: 'active',
+                            tier: 'paid',
                             signedUpAt: new Date().toISOString()
                         }, {
                             token: env.SANITY_API_TOKEN
@@ -179,15 +181,16 @@ export async function POST(req: Request) {
                     console.log(`✉️ Automated Cancellation Email sent to ${customerEmail}`)
 
                     // Unsubscribe them in the Resend Audience
-                    if (env.RESEND_AUDIENCE_ID) {
+                    const targetAudienceId = env.RESEND_PAID_AUDIENCE_ID || env.RESEND_AUDIENCE_ID
+                    if (targetAudienceId) {
                         try {
                             // Find the contact id first to delete them
-                            const contactList = await resend.contacts.list({ audienceId: env.RESEND_AUDIENCE_ID })
+                            const contactList = await resend.contacts.list({ audienceId: targetAudienceId })
                             const targetContact = contactList.data?.data.find(c => c.email === customerEmail)
 
                             if (targetContact?.id) {
                                 await resend.contacts.remove({
-                                    audienceId: env.RESEND_AUDIENCE_ID,
+                                    audienceId: targetAudienceId,
                                     id: targetContact.id
                                 })
                                 console.log(`👥 Removed ${customerEmail} from Resend Audience.`)

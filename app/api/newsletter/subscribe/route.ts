@@ -42,6 +42,7 @@ export async function POST(req: Request) {
             _type: 'subscriber',
             email,
             status: 'active',
+            tier: 'free',
             signedUpAt: new Date().toISOString()
         }, {
             token: process.env.SANITY_API_TOKEN // Ensure write token is used
