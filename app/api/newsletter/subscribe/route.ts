@@ -24,11 +24,12 @@ export async function POST(req: Request) {
         }
 
         // Add to Resend Audience First
-        if (env.RESEND_AUDIENCE_ID) {
+        const targetAudienceId = env.RESEND_LEADS_AUDIENCE_ID || env.RESEND_AUDIENCE_ID
+        if (targetAudienceId) {
             try {
                 await resend.contacts.create({
                     email: email,
-                    audienceId: env.RESEND_AUDIENCE_ID,
+                    audienceId: targetAudienceId,
                     unsubscribed: false,
                 })
             } catch (resendError) {

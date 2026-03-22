@@ -89,14 +89,13 @@ export async function POST(req: Request) {
                     }
 
                     // Add to Resend Audience
-                    const targetAudienceId = env.RESEND_PAID_AUDIENCE_ID || env.RESEND_AUDIENCE_ID
-                    if (targetAudienceId) {
+                    if (env.RESEND_AUDIENCE_ID) {
                         try {
                             await resend.contacts.create({
                                 email: customerEmail,
                                 firstName: session.customer_details?.name?.split(' ')[0] || "",
                                 lastName: session.customer_details?.name?.split(' ').slice(1).join(' ') || "",
-                                audienceId: targetAudienceId,
+                                audienceId: env.RESEND_AUDIENCE_ID,
                                 unsubscribed: false,
                             })
                             console.log(`👥 Added ${customerEmail} to Resend Audience.`)
@@ -104,7 +103,7 @@ export async function POST(req: Request) {
                             console.error(`❌ Failed to add ${customerEmail} to Resend Audience:`, contactErr)
                         }
                     } else {
-                        console.warn("⚠️ Neither RESEND_PAID_AUDIENCE_ID nor RESEND_AUDIENCE_ID is set. Skipping audience sync.")
+                        console.warn("⚠️ RESEND_AUDIENCE_ID is not set. Skipping audience sync.")
                     }
                 } else {
                     console.warn("⚠️ RESEND_API_KEY is not set. Skipping Welcome Email.")
@@ -181,16 +180,15 @@ export async function POST(req: Request) {
                     console.log(`✉️ Automated Cancellation Email sent to ${customerEmail}`)
 
                     // Unsubscribe them in the Resend Audience
-                    const targetAudienceId = env.RESEND_PAID_AUDIENCE_ID || env.RESEND_AUDIENCE_ID
-                    if (targetAudienceId) {
+                    if (env.RESEND_AUDIENCE_ID) {
                         try {
                             // Find the contact id first to delete them
-                            const contactList = await resend.contacts.list({ audienceId: targetAudienceId })
+                            const contactList = await resend.contacts.list({ audienceId: env.RESEND_AUDIENCE_ID })
                             const targetContact = contactList.data?.data.find(c => c.email === customerEmail)
 
                             if (targetContact?.id) {
                                 await resend.contacts.remove({
-                                    audienceId: targetAudienceId,
+                                    audienceId: env.RESEND_AUDIENCE_ID,
                                     id: targetContact.id
                                 })
                                 console.log(`👥 Removed ${customerEmail} from Resend Audience.`)
