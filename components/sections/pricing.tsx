@@ -91,12 +91,12 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
                     </div>
                 )}
 
-                <FadeInStagger className="flex flex-wrap justify-center gap-8 md:gap-12 max-w-7xl mx-auto">
+                <FadeInStagger className={`grid grid-cols-1 md:grid-cols-2 ${displayTiers.length === 3 ? "lg:grid-cols-3" : "max-w-4xl"} gap-8 md:gap-12 max-w-7xl mx-auto`}>
                     {displayTiers.map((tier) => {
                         return (
                             <FadeIn
                                 key={tier.name}
-                                className="relative flex flex-col rounded-[2rem] border border-stone-200 bg-white p-10 md:p-12 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-stone-200/50 w-full max-w-md group"
+                                className="relative flex flex-col rounded-[2rem] border border-stone-200 bg-white p-10 md:p-12 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-stone-200/50 w-full group"
                             >
                                 <div className="mb-8">
                                     <h3 className="text-2xl font-serif text-stone-900 group-hover:text-stone-600 transition-colors">{tier.name}</h3>
@@ -116,12 +116,10 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
 
                                 {tier.price.toLowerCase() === 'free' || tier.price === '£0' || tier.price === '$0' ? (
                                     <Dialog>
-                                        <DialogTrigger asChild>
-                                            <Button
-                                                className="w-full h-14 text-base font-light tracking-wide rounded-full text-stone-50 bg-stone-900 hover:bg-stone-800 hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-xl"
-                                            >
-                                                {tier.ctaText || 'Join (Free)'}
-                                            </Button>
+                                        <DialogTrigger
+                                            className="w-full h-14 inline-flex items-center justify-center text-base font-medium tracking-wide rounded-full text-stone-50 bg-stone-900 hover:bg-stone-800 hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-xl focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-950 cursor-pointer"
+                                        >
+                                            {tier.ctaText || 'Join (Free)'}
                                         </DialogTrigger>
                                         <DialogContent className="sm:max-w-md bg-stone-50 border-stone-200">
                                             <DialogHeader>

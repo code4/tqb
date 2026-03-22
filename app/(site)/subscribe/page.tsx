@@ -27,6 +27,20 @@ export default async function SubscribePage() {
         )
     }
 
+    // Automatically ensure the Free Tier is present if it hasn't been added manually in Sanity
+    let finalTiers = data.tiers || []
+    if (!finalTiers.some((t: any) => t.price?.toLowerCase() === 'free' || t.price === '£0')) {
+        finalTiers = [
+            {
+                name: "Digital Reader",
+                price: "Free",
+                ctaLink: "#",
+                features: ["Newsletter", "Digital Essays", "Community Updates"],
+            },
+            ...finalTiers
+        ]
+    }
+
     return (
         <div className="flex flex-col">
             <div className="relative overflow-hidden bg-stone-50 pt-16 md:pt-24 lg:pt-32 pb-8 md:pb-12">
@@ -47,7 +61,7 @@ export default async function SubscribePage() {
                 </Container>
             </div>
 
-            <Pricing heading="" tiers={data.tiers} className="pb-24 md:pb-32 lg:pb-40 bg-stone-50 pt-0" />
+            <Pricing heading="" tiers={finalTiers} className="pb-24 md:pb-32 lg:pb-40 bg-stone-50 pt-0" />
         </div>
     )
 }
