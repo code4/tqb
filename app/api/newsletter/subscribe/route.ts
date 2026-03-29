@@ -55,15 +55,25 @@ export async function POST(req: Request) {
             token: process.env.SANITY_API_TOKEN // Ensure write token is used
         })
 
-        // ---------------------------------------------------------
-        // Resend Automation Handoff
-        // ---------------------------------------------------------
-        // We have gracefully removed the manual `resend.emails.send(...)` 
-        // dispatcher here. Because you are pasting the compiled HTML 
-        // directly into Resend, you should configure a "Resend Broadcast" 
-        // or a "Resend Automation" to automatically dispatch that HTML 
-        // template whenever a new contact is added to your Audience.
-        // This prevents users from receiving duplicate emails!
+        try {
+            // Send the free tier welcome email using the Resend Hosted Template
+            const { data, error } = await resend.emails.send({
+                from: process.env.EMAIL_FROM || "The Quiet Bloom <onboarding@resend.dev>",
+                to: email,
+                subject: "Welcome to our quiet corner of the internet.", // Fallback subject if not set in template
+                template: {
+                    id: "free-subscriber-welcome-email", // The slug from the Resend Dashboard screenshot
+                },
+            })
+
+            if (error) {
+                console.error("Resend Delivery Error:", error)
+            } else {
+                console.log("Welcome email template dispatched successfully:", data)
+            }
+        } catch (emailError) {
+            console.error("Welcome Email Sending Error:", emailError)
+        }
         
         return NextResponse.json({ message: "Successfully subscribed" }, { status: 201 })
 
