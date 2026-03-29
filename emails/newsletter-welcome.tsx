@@ -19,49 +19,7 @@ export const NewsletterWelcomeEmail = () => {
             <Preview>The Quiet Bloom: Reflection Prompts & Welcome</Preview>
             <Body style={main}>
                 <Container style={container}>
-                    {/* Document 1: Reflection Prompts */}
-                    <Section style={bodySection}>
-                        <Text style={h2}>The Quiet Bloom-Reflection Prompts</Text>
-                        
-                        <ul style={list}>
-                            <li style={listItemBold}>What feels heavy right now?</li>
-                            <li style={listItemBold}>What would ease look like today?</li>
-                        </ul>
-
-                        <Text style={text}>
-                            Before answering, take 10–20 seconds to breathe or pause. Reflection works best when your mind is not in "problem-solving mode" but in "noticing mode."
-                        </Text>
-
-                        <Text style={text}>
-                            A few ways to shift into noticing:
-                        </Text>
-                        <ul style={list}>
-                            <li style={listItem}>Put a hand on your chest or stomach and take one slow breath.</li>
-                            <li style={listItem}>Relax your jaw or shoulders for a moment.</li>
-                        </ul>
-
-                        <Text style={text}>
-                            Break the question to micro prompts and scan different parts of your life.<br />
-                            <span style={italicSpan}>Mind / Body / Emotions / Energy.</span>
-                        </Text>
-
-                        <Text style={text}>
-                            You don't need a perfect answer. Even a few words like "pressure," "uncertainty," "too many small tasks," "emotional load" are enough.
-                        </Text>
-
-                        <Text style={text}>
-                            For the second question, you're not looking for a life overhaul—just something that shifts your day.
-                        </Text>
-
-                        <Text style={textItalicCentered}>
-                            After your reflection, ask :<br />
-                            "What is one small thing I can do in the next hour that honours what I just discovered?"
-                        </Text>
-                    </Section>
-
-                    <Hr style={divider} />
-
-                    {/* Document 2: Intro / Welcome */}
+                    {/* Document 1: Intro / Welcome */}
                     <Section style={bodySection}>
                         <Heading style={h1}>The Quiet Bloom</Heading>
                         <Text style={locationText}>London</Text>
@@ -100,7 +58,7 @@ export const NewsletterWelcomeEmail = () => {
 
                     <Hr style={divider} />
 
-                    {/* Document 3: Noticing template */}
+                    {/* Document 2: Noticing template */}
                     <Section style={bodySection}>
                         <Text style={subtleHeader}>The Quiet Bloom</Text>
 
@@ -119,6 +77,48 @@ export const NewsletterWelcomeEmail = () => {
 
                         <Text style={noticingPrompt}>
                             And the smallest step I can take is..
+                        </Text>
+                    </Section>
+
+                    <Hr style={divider} />
+
+                    {/* Document 3: Reflection Prompts */}
+                    <Section style={bodySection}>
+                        <Text style={h2}>The Quiet Bloom-Reflection Prompts</Text>
+                        
+                        <ul style={list}>
+                            <li style={listItemBold}>What feels heavy right now?</li>
+                            <li style={listItemBold}>What would ease look like today?</li>
+                        </ul>
+
+                        <Text style={text}>
+                            Before answering, take 10–20 seconds to breathe or pause. Reflection works best when your mind is not in "problem-solving mode" but in "noticing mode."
+                        </Text>
+
+                        <Text style={text}>
+                            A few ways to shift into noticing:
+                        </Text>
+                        <ul style={list}>
+                            <li style={listItem}>Put a hand on your chest or stomach and take one slow breath.</li>
+                            <li style={listItem}>Relax your jaw or shoulders for a moment.</li>
+                        </ul>
+
+                        <Text style={text}>
+                            Break the question to micro prompts and scan different parts of your life.<br />
+                            <span style={italicSpan}>Mind / Body / Emotions / Energy.</span>
+                        </Text>
+
+                        <Text style={text}>
+                            You don't need a perfect answer. Even a few words like "pressure," "uncertainty," "too many small tasks," "emotional load" are enough.
+                        </Text>
+
+                        <Text style={text}>
+                            For the second question, you're not looking for a life overhaul—just something that shifts your day.
+                        </Text>
+
+                        <Text style={textItalicCentered}>
+                            After your reflection, ask :<br />
+                            "What is one small thing I can do in the next hour that honours what I just discovered?"
                         </Text>
                     </Section>
 
