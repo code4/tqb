@@ -5,10 +5,11 @@ import { Section } from "@/components/ui/section"
 import { Container } from "@/components/ui/container"
 import { FadeIn, FadeInStagger } from "@/components/ui/fade-in"
 import { Button } from "@/components/ui/button"
-import { Check, Loader2 } from "lucide-react"
+import { Check, Loader2, Gift, Heart } from "lucide-react"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { NewsletterForm } from "@/components/sections/newsletter-form"
+import { SectionCTAButton } from "@/components/sections/section-cta-button"
 
 // Reuse types from Sanity schema or generic
 interface Tier {
@@ -25,10 +26,20 @@ interface PricingProps {
     subheading?: string
     tiers?: Tier[]
     className?: string
+    isGift?: boolean
+    backgroundColor?: 'white' | 'stone' | 'stone-light'
+    ctaText?: string
+    ctaLink?: string
 }
 
-export function Pricing({ heading = "Membership", subheading, tiers, className }: PricingProps) {
-    // Fallback tiers if none provided, and filter out any "Free" or "Digital Reader" tiers from Sanity
+export function Pricing({ heading = "Membership", subheading, tiers, className, isGift = false, backgroundColor = 'stone', ctaText, ctaLink }: PricingProps) {
+    const bgClass = {
+        'white': 'bg-white',
+        'stone': 'bg-stone-50',
+        'stone-light': 'bg-stone-50/30'
+    }[backgroundColor]
+
+    // Fallback tiers if none provided
     const displayTiers = (tiers && tiers.length > 0 ? tiers : [
         {
             name: "Digital Reader",
@@ -58,7 +69,7 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
             const res = await fetch("/api/checkout", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ tier: tierName }),
+                body: JSON.stringify({ tier: tierName, isGift }),
             })
 
             const data = await res.json()
@@ -76,19 +87,21 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
     }
 
     return (
-        <Section className={className || "py-24 md:py-32 lg:py-40 bg-stone-50"} id="pricing">
+        <Section className={className || `py-24 md:py-32 lg:py-40 ${bgClass}`} id="pricing">
             <Container>
                 {(heading || subheading) && (
-                    <div className="mx-auto mb-16 max-w-3xl text-center">
-                        {heading && (
-                            <h2 className="font-serif text-4xl font-light text-stone-900 md:text-5xl lg:text-6xl tracking-tight">
-                                {heading}
-                            </h2>
-                        )}
-                        {subheading && (
-                            <p className="mt-6 text-stone-600 text-lg md:text-xl font-light leading-relaxed">{subheading}</p>
-                        )}
-                    </div>
+                    <FadeIn>
+                        <div className="mx-auto mb-16 max-w-3xl text-center">
+                            {heading && (
+                                <h2 className="font-serif text-4xl font-light text-stone-900 md:text-5xl lg:text-6xl tracking-tight">
+                                    {heading}
+                                </h2>
+                            )}
+                            {subheading && (
+                                <p className="mt-6 text-stone-600 text-lg md:text-xl font-light leading-relaxed">{subheading}</p>
+                            )}
+                        </div>
+                    </FadeIn>
                 )}
 
                 <FadeInStagger className={`grid grid-cols-1 md:grid-cols-2 ${displayTiers.length === 3 ? "lg:grid-cols-3" : "max-w-4xl"} gap-8 md:gap-12 max-w-7xl mx-auto`}>
@@ -99,10 +112,18 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
                                 className="relative flex flex-col rounded-[2rem] border border-stone-200 bg-white p-10 md:p-12 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-stone-200/50 w-full group"
                             >
                                 <div className="mb-8">
+                                    {isGift && (
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <Gift className="h-5 w-5 text-stone-400" strokeWidth={1.5} />
+                                            <span className="text-sm text-stone-400 font-light tracking-wide uppercase">3 Months Gift</span>
+                                        </div>
+                                    )}
                                     <h3 className="text-2xl font-serif text-stone-900 group-hover:text-stone-600 transition-colors">{tier.name}</h3>
                                     <div className="mt-6 flex items-baseline text-stone-900">
                                         <span className="text-5xl md:text-6xl font-serif font-light tracking-tight">{tier.price}</span>
-                                        <span className="ml-2 text-stone-500 font-light">/month</span>
+                                        <span className="ml-2 text-stone-500 font-light">
+                                            {isGift ? "one-time" : "/month"}
+                                        </span>
                                     </div>
                                 </div>
                                 <ul className="mb-10 space-y-5 flex-1">
@@ -142,9 +163,16 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
                                         {loadingTier === tier.name ? (
                                             <Loader2 className="h-5 w-5 animate-spin" />
                                         ) : (
-                                            tier.name.includes('International') ? 'Join (International)' :
-                                                tier.name.includes('UK') ? 'Join (UK)' :
-                                                    (tier.ctaText || 'Subscribe')
+                                            isGift ? (
+                                                <span className="flex items-center gap-2">
+                                                    <Heart className="h-4 w-4" strokeWidth={1.5} />
+                                                    {tier.ctaText || 'Gift This'}
+                                                </span>
+                                            ) : (
+                                                tier.name.includes('International') ? 'Join (International)' :
+                                                    tier.name.includes('UK') ? 'Join (UK)' :
+                                                        (tier.ctaText || 'Subscribe')
+                                            )
                                         )}
                                     </Button>
                                 )}
@@ -152,6 +180,8 @@ export function Pricing({ heading = "Membership", subheading, tiers, className }
                         )
                     })}
                 </FadeInStagger>
+
+                <SectionCTAButton ctaText={ctaText} ctaLink={ctaLink} />
             </Container>
         </Section>
     )

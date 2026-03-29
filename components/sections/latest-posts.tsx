@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, BookOpen } from "lucide-react"
 import { urlFor } from "@/sanity/lib/image"
 import { FadeIn, FadeInStagger } from "@/components/ui/fade-in"
+import { SectionCTAButton } from "@/components/sections/section-cta-button"
 
 interface Post {
     title: string
@@ -24,10 +25,19 @@ interface Post {
 interface LatestPostsProps {
     heading?: string
     posts: Post[]
+    backgroundColor?: 'white' | 'stone' | 'stone-light'
+    ctaText?: string
+    ctaLink?: string
 }
 
-export function LatestPosts({ heading = "Recent Reflections", posts }: LatestPostsProps) {
+export function LatestPosts({ heading = "Recent Reflections", posts, backgroundColor = 'stone-light', ctaText, ctaLink }: LatestPostsProps) {
     if (!posts || posts.length === 0) return null
+
+    const bgClass = {
+        'white': 'bg-white',
+        'stone': 'bg-stone-50',
+        'stone-light': 'bg-stone-50/50'
+    }[backgroundColor]
 
     // Estimate read time (very rough: 200 words/min)
     const getReadTime = (text: string) => {
@@ -37,17 +47,19 @@ export function LatestPosts({ heading = "Recent Reflections", posts }: LatestPos
     }
 
     return (
-        <Section spacing="lg" className="bg-stone-50/50">
+        <Section spacing="lg" className={`${bgClass}`}>
             <Container>
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
                     <h2 className="font-serif text-3xl font-light text-stone-900 md:text-4xl">
                         {heading}
                     </h2>
-                    <Button asChild variant="outline" className="hidden md:inline-flex">
-                        <Link href="/blog">
-                            View All Posts
-                        </Link>
-                    </Button>
+                    {!ctaText && (
+                        <Button asChild variant="outline" className="hidden md:inline-flex rounded-full px-6 border-stone-300">
+                            <Link href="/blog">
+                                View All Posts
+                            </Link>
+                        </Button>
+                    )}
                 </div>
 
                 <FadeInStagger className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
@@ -96,11 +108,11 @@ export function LatestPosts({ heading = "Recent Reflections", posts }: LatestPos
                                         <span>{getReadTime(excerpt)}</span>
                                     </div>
 
-                                    <h3 className="mb-3 font-serif text-2xl font-normal text-stone-900 leading-tight group-hover:text-stone-600 transition-colors">
+                                    <h3 className="mb-3 font-serif text-2xl font-normal text-stone-900 leading-tight group-hover:text-stone-600 transition-colors line-clamp-2">
                                         {title}
                                     </h3>
 
-                                    <p className="line-clamp-3 text-stone-600 leading-relaxed mb-4">
+                                    <p className="line-clamp-3 text-stone-600 leading-relaxed mb-4 text-sm font-light">
                                         {excerpt}
                                     </p>
 
@@ -113,16 +125,21 @@ export function LatestPosts({ heading = "Recent Reflections", posts }: LatestPos
                     })}
                 </FadeInStagger>
 
-                <div className="mt-12 md:hidden text-center">
-                    <Button asChild variant="outline">
-                        <Link href="/blog">
-                            View All Posts
-                        </Link>
-                    </Button>
-                </div>
+                {!ctaText && (
+                    <div className="mt-12 md:hidden text-center">
+                        <Button asChild variant="outline">
+                            <Link href="/blog">
+                                View All Posts
+                            </Link>
+                        </Button>
+                    </div>
+                )}
+
+                <SectionCTAButton ctaText={ctaText} ctaLink={ctaLink} />
             </Container>
         </Section>
     )
 }
+
 
 

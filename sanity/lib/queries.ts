@@ -67,6 +67,54 @@ export const landingPageQuery = defineQuery(`
   }
 `)
 
+export const giftPageQuery = defineQuery(`
+  *[_type == "giftPage"][0] {
+    ...,
+    sections[] {
+      ...,
+      _type == 'hero' => {
+        ...,
+        image { asset->, hotspot, crop }
+      },
+      _type == 'textBlock' => {
+        ...,
+        content[]
+      },
+      _type == 'featureList' => {
+        ...,
+        features[]
+      },
+      _type == 'testimonials' => {
+        ...,
+        items[]
+      },
+      _type == 'faqSection' => {
+        ...,
+        items[]
+      },
+      _type == 'pricing' => {
+        ...,
+        tiers[] {
+          ...,
+          features[]
+        }
+      },
+      _type == 'latestPosts' => {
+        ...
+      },
+      _type == 'founderBio' => {
+        ...,
+        image { asset->, hotspot, crop },
+        bio[]
+      },
+      _type == 'cta' => {
+        ...
+      }
+    }
+  }
+`)
+
+
 export const legalPageQuery = defineQuery(`
   *[_type == "legalPage" && slug.current == $slug][0] {
     title,

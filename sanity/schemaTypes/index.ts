@@ -3,6 +3,7 @@ import { blockContent } from './blockContent'
 import { siteSettings } from './siteSettings'
 import { legalPage } from './legalPage'
 import { landingPage } from './landingPage'
+import { giftPage } from './giftPage'
 import { subscribePage } from './subscribePage'
 import { successPage } from './successPage'
 import { welcomeEmail } from './welcomeEmail'
@@ -16,5 +17,5 @@ import { post } from './post'
 import { subscriber } from './subscriber'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-    types: [blockContent, siteSettings, legalPage, landingPage, subscribePage, successPage, welcomeEmail, unsubscribedEmail, testimonial, faq, post, subscriber],
+    types: [blockContent, siteSettings, legalPage, landingPage, giftPage, subscribePage, successPage, welcomeEmail, unsubscribedEmail, testimonial, faq, post, subscriber],
 }

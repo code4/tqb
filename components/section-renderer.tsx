@@ -47,19 +47,19 @@ export function SectionRenderer({ sections, posts }: SectionRendererProps) {
                         case 'featureList':
                             return <FeatureList {...s} />
                         case 'testimonials':
-                            return <Testimonials items={s.items} heading={s.heading} />
+                            return <Testimonials {...s} />
                         case 'faqSection':
-                            return <FAQ items={s.items} title={s.title} />
+                            return <FAQ {...s} />
                         case 'pricing':
                             return <Pricing {...s} />
                         case 'latestPosts':
-                            return <LatestPosts posts={posts || []} heading={s.heading} />
+                            return <LatestPosts {...s} posts={posts || []} />
                         case 'founderBio':
                             return <FounderBio {...s} />
                         case 'cta':
                             return <CTA {...s} />
                         case 'giftCTA':
-                            return <GiftCTA heading={s.heading} description={s.description} buttonText={s.buttonText} />
+                            return <GiftCTA {...s} />
                         default:
                             console.warn(`Unknown section type: ${section._type}`)
                             return null
@@ -67,9 +67,9 @@ export function SectionRenderer({ sections, posts }: SectionRendererProps) {
                 }
 
                 return (
-                    <FadeIn key={key}>
+                    <React.Fragment key={key}>
                         {renderSection()}
-                    </FadeIn>
+                    </React.Fragment>
                 )
             })}
         </>
