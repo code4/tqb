@@ -8,7 +8,17 @@ import { FadeIn } from "@/components/ui/fade-in"
 import { Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export function GiftCTA() {
+interface GiftCTAProps {
+    heading?: string
+    description?: string
+    buttonText?: string
+}
+
+export function GiftCTA({
+    heading = "Give the Gift of Pause",
+    description = "Know someone who deserves a moment of stillness? Gift them three months of handwritten letters, delivered to their door.",
+    buttonText = "Gift Someone",
+}: GiftCTAProps) {
     return (
         <Section className="py-20 md:py-28 bg-white border-t border-stone-100">
             <Container className="max-w-3xl text-center">
@@ -18,10 +28,10 @@ export function GiftCTA() {
                             <Gift className="h-6 w-6 text-stone-500" strokeWidth={1.5} />
                         </div>
                         <h2 className="font-serif text-3xl md:text-4xl font-light text-stone-900 tracking-tight">
-                            Give the Gift of Pause
+                            {heading}
                         </h2>
                         <p className="text-stone-500 font-light text-lg leading-relaxed max-w-xl">
-                            Know someone who deserves a moment of stillness? Gift them three months of handwritten letters, delivered to their door.
+                            {description}
                         </p>
                         <Button
                             asChild
@@ -32,7 +42,7 @@ export function GiftCTA() {
                             <Link href="/gift">
                                 <span className="flex items-center gap-2">
                                     <Gift className="h-4 w-4" strokeWidth={1.5} />
-                                    Gift Someone
+                                    {buttonText}
                                 </span>
                             </Link>
                         </Button>

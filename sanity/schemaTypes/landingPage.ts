@@ -159,6 +159,18 @@ export const landingPage = defineType({
                         { name: 'buttonLink', type: 'string', title: 'Button Link' },
                     ],
                 },
+                // 10. Gift CTA
+                {
+                    type: 'object',
+                    name: 'giftCTA',
+                    title: 'Gift CTA',
+                    fields: [
+                        { name: 'enabled', type: 'boolean', title: 'Enabled', initialValue: true },
+                        { name: 'heading', type: 'string', title: 'Heading', initialValue: 'Give the Gift of Pause' },
+                        { name: 'description', type: 'text', title: 'Description', initialValue: 'Know someone who deserves a moment of stillness? Gift them three months of handwritten letters, delivered to their door.' },
+                        { name: 'buttonText', type: 'string', title: 'Button Text', initialValue: 'Gift Someone' },
+                    ],
+                },
             ],
         }),
     ],

@@ -1,7 +1,6 @@
 import { client } from "@/sanity/lib/client"
 import { landingPageQuery, postsQuery } from "@/sanity/lib/queries"
 import { SectionRenderer } from "@/components/section-renderer"
-import { GiftCTA } from "@/components/sections/gift-cta"
 
 export const revalidate = 60 // standard revalidation for ISR
 
@@ -42,7 +41,6 @@ export default async function LandingPage() {
             {/* If title is needed for metadata, it's usually handled in generateMetadata. 
              Here we just render sections. */}
             <SectionRenderer sections={data.sections} posts={posts} />
-            <GiftCTA />
         </div>
     )
 }

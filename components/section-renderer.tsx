@@ -9,6 +9,7 @@ import { FAQ } from "@/components/sections/faq"
 import { Pricing } from "@/components/sections/pricing"
 import { FounderBio } from "@/components/sections/founder-bio"
 import { CTA } from "@/components/sections/cta"
+import { GiftCTA } from "@/components/sections/gift-cta"
 
 type Section = {
     _type: string
@@ -57,6 +58,8 @@ export function SectionRenderer({ sections, posts }: SectionRendererProps) {
                             return <FounderBio {...s} />
                         case 'cta':
                             return <CTA {...s} />
+                        case 'giftCTA':
+                            return <GiftCTA heading={s.heading} description={s.description} buttonText={s.buttonText} />
                         default:
                             console.warn(`Unknown section type: ${section._type}`)
                             return null
