@@ -16,14 +16,26 @@ export async function Footer() {
     const title = settings?.title || "The Quiet Bloom"
     const footer = settings?.footer || {}
 
-    // Fallbacks (Empty by Default so they can be hidden)
-    const brandDescription = footer.brandDescription || ""
-    const exploreLinks = footer.exploreLinks || []
-    const supportLinks = footer.supportLinks || []
-    const newsletterHeading = footer.newsletterHeading || ""
-    const newsletterDescription = footer.newsletterDescription || ""
-    const contactEmail = footer.contactEmail || ""
-    const contactText = footer.contactText || ""
+    // Fallbacks (Provide rich defaults if Sanity is still empty)
+    const brandDescription = footer.brandDescription || "A slow print club for women who are still becoming. A quiet sanctuary to simply be — something beautiful to hold, read, and sit with."
+    
+    const exploreLinks = footer.exploreLinks?.length > 0 ? footer.exploreLinks : [
+        { label: 'Home', url: '/' },
+        { label: 'Blog', url: '/blog' },
+        { label: 'About', url: '/about' },
+        { label: 'Give a Gift', url: '/gift' }
+    ]
+    
+    const supportLinks = footer.supportLinks?.length > 0 ? footer.supportLinks : [
+        { label: 'Manage Subscriptions', url: process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com" },
+        { label: 'Privacy Policy', url: '/legal/privacy' },
+        { label: 'Terms of Service', url: '/legal/terms' }
+    ]
+    
+    const newsletterHeading = footer.newsletterHeading || "Join The Digital Reader"
+    const newsletterDescription = footer.newsletterDescription || "We send occasional, thoughtful letters and updates on new print releases. No noise, just a quiet moment of reflection."
+    const contactEmail = footer.contactEmail || "hello@thequietbloom.co.uk"
+    const contactText = footer.contactText || "Have a question or just want to say hello?"
 
     return (
         <footer className="border-t border-stone-200 bg-stone-50 py-16 md:py-24">
