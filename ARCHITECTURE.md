@@ -22,7 +22,7 @@
 
 ### Free Subscriber Flow (Digital Reader)
 
-1. **User Action**: The visitor enters their email on the `/subscribe` page or the global footer newsletter form.
+1. **User Action**: The visitor enters their email via the free subscribe button on the home page, the dedicated `/subscribe` page, or the global footer newsletter form.
 2. **API Execution (`/api/newsletter/subscribe`)**:
    - The application checks **Sanity** to see if the user's email already exists as a `subscriber` document.
    - **Protection Mechanism**: If the email exists, the API returns a silent `200 OK` early so that duplicate subscribers and spam emails are not triggered.
