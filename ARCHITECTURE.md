@@ -57,19 +57,39 @@
    - The user is permanently **removed** from the active Resend Audience to stop future mailings.
    - The `subscriber` document in **Sanity** is automatically patched to update its status to `status: 'cancelled'`.
 
+### Gift Subscription Flow
+
+1. **User Action**: The visitor navigates to the dedicated `/gift` page (accessible via the nav bar or the CMS-driven "Gift CTA" section on the homepage) and selects either the UK (£24) or International (£33) tier.
+2. **Checkout Initiation (`/api/checkout` with `isGift: true`)**:
+   - The API detects `isGift: true` and switches the Stripe Checkout mode from `subscription` (recurring) to `payment` (one-time charge).
+   - It uses dedicated gift Price IDs (`STRIPE_GIFT_UK_PRICE_ID` / `STRIPE_GIFT_INTL_PRICE_ID`) instead of the recurring subscription prices.
+   - Stripe Checkout displays custom fields for **Recipient's Full Name** and an optional **Gift Message**, alongside the standard **Shipping Address** collection and **Birthday Month** dropdown.
+   - The session `metadata` stores `isGift: "true"`, `tier`, and `giftDurationMonths`.
+3. **Payment Completion & Stripe Webhook**:
+   - The webhook detects `session.metadata.isGift === "true"` and extracts the `recipientname` and `giftmessage` custom fields.
+   - A `subscriber` document is created in **Sanity** with gift fields: `isGift`, `giftRecipientName`, `giftMessage`, `gifterEmail`, and `giftExpiresAt` (calculated as `now + GIFT_DURATION_MONTHS`).
+   - Gift subscribers appear with a 🎁 prefix in the Sanity Studio preview.
+4. **Gift Expiry (Future)**: A Vercel Cron Job can check for expired gifts daily and send nudge emails to recipients and gifters.
+
 ---
 
 ## 💾 3. Data Schema & Content Modeling
 
 The Sanity Content Lake serves as the system of record. Key document schemas include:
 
-- **`subscriber`**: Stores `email`, `status` (Active/Unsubscribed), `tier` (Free/Paid), and `signedUpAt`.
+- **`subscriber`**: Stores `email`, `status` (Active/Unsubscribed), `tier` (Free/Paid), `signedUpAt`, and gift-specific fields: `isGift` (boolean), `giftRecipientName`, `giftMessage`, `gifterEmail`, and `giftExpiresAt`.
 - **`post`**: Standard content format for editorial blog posts (Title, Slug, Main Image, Rich Text Block Content).
 - **`landingPage` & `subscribePage` & `successPage`**: Enables the site admin to edit headline copy, images, benefits, and call-to-actions without touching code.
 - **`siteSettings`**: Global state like the logo, brand colors, copyright, navigation links, and SEO defaults.
 - **`welcomeEmail` & `unsubscribedEmail`**: Gives Ash (the creator) the ability to tweak automated email copy dynamically without triggering a Vercel code redeploy.
 
+### Pages & Sections
+
+- **`/gift`** (`app/(site)/gift/page.tsx`): Dedicated gift subscription page with editorial copy, a "How It Works" guide, and two gift tier cards. Calls `/api/checkout` with `isGift: true`.
+- **Gift CTA Section** (`giftCTA` in `landingPage` schema): A CMS-driven section that can be positioned anywhere on the homepage via the Sanity Studio sections list. Renders a "Give the Gift of Pause" banner with a configurable heading, description, and button text.
+
 ## 🔐 4. Environmental Configuration & State Boundaries
 
 - Because the app leverages Stripe Webhooks and Resend automation, it requires stringent environment variable barriers.
+- **Gift Config**: `STRIPE_GIFT_UK_PRICE_ID`, `STRIPE_GIFT_INTL_PRICE_ID` (one-time Stripe Price IDs), and `GIFT_DURATION_MONTHS` (defaults to `3`) control the gift subscription pricing and duration without code changes.
 - **Local Testing**: On the `free` tier of Resend, the application intercepts outgoing traffic and defaults strictly to a verified sandbox context (e.g. sending FROM `onboarding@resend.dev` TO a registered testing email) to prevent sandbox crashes. Sanity also blocks repeated local tests if the identical test email isn't manually deleted from the `subscriber` collection first.
