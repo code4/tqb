@@ -68,7 +68,7 @@ export async function POST(req: Request) {
                 },
                 {
                     key: "giftmessage",
-                    label: { type: "custom", custom: "Gift Message & From (e.g. Happy Birthday! From Sarah)" },
+                    label: { type: "custom", custom: "Gift Message (e.g. Happy Birthday! — Sarah)" },
                     type: "text",
                     optional: true,
                 },
