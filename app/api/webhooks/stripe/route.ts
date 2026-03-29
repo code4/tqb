@@ -49,6 +49,23 @@ export async function POST(req: Request) {
                     throw new Error("No customer email found in session")
                 }
 
+                // 1b. Check if this is a gift purchase
+                const isGift = session.metadata?.isGift === "true"
+                let giftRecipientName = ""
+                let giftMessage = ""
+
+                if (isGift && session.custom_fields) {
+                    for (const field of session.custom_fields) {
+                        if (field.key === "recipientname" && field.text?.value) {
+                            giftRecipientName = field.text.value
+                        }
+                        if (field.key === "giftmessage" && field.text?.value) {
+                            giftMessage = field.text.value
+                        }
+                    }
+                    console.log(`🎁 Gift purchase detected! Recipient: ${giftRecipientName}`)
+                }
+
                 // 2. Fetch Email Content from Sanity
                 let emailContent = {
                     subject: "Welcome to The Quiet Bloom",
@@ -109,7 +126,7 @@ export async function POST(req: Request) {
                     console.warn("⚠️ RESEND_API_KEY is not set. Skipping Welcome Email.")
                 }
 
-                // 3. Save Subscriber to Sanity
+                // 4. Save Subscriber to Sanity (with gift data if applicable)
                 if (env.SANITY_API_TOKEN) {
                     const existing = await client.fetch(
                         `*[_type == "subscriber" && email == $email][0]`,
@@ -117,16 +134,31 @@ export async function POST(req: Request) {
                     )
 
                     if (!existing) {
-                        await client.create({
+                        const subscriberDoc: { _type: string; [key: string]: any } = {
                             _type: 'subscriber',
                             email: customerEmail,
                             status: 'active',
                             tier: 'paid',
-                            signedUpAt: new Date().toISOString()
-                        }, {
+                            signedUpAt: new Date().toISOString(),
+                            isGift: isGift,
+                        }
+
+                        if (isGift) {
+                            subscriberDoc.giftRecipientName = giftRecipientName
+                            subscriberDoc.giftMessage = giftMessage
+                            subscriberDoc.gifterEmail = customerEmail
+
+                            // Calculate gift expiry date
+                            const durationMonths = parseInt(session.metadata?.giftDurationMonths || "3", 10)
+                            const expiresAt = new Date()
+                            expiresAt.setMonth(expiresAt.getMonth() + durationMonths)
+                            subscriberDoc.giftExpiresAt = expiresAt.toISOString()
+                        }
+
+                        await client.create(subscriberDoc, {
                             token: env.SANITY_API_TOKEN
                         })
-                        console.log(`📝 Subscriber ${customerEmail} saved to Sanity.`)
+                        console.log(`📝 Subscriber ${customerEmail} saved to Sanity.${isGift ? ` (Gift order 🎁 - expires ${subscriberDoc.giftExpiresAt})` : ''}`)
                     }
                 } else {
                     console.warn("⚠️ SANITY_API_TOKEN is not set. Skipping Sanity save.")

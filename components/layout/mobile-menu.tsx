@@ -30,6 +30,7 @@ export function MobileMenu({ title, logo, menuItems, subscribeText = "Subscribe 
         { label: "Home", url: "/" },
         { label: "Blog", url: "/blog" },
         { label: "About", url: "/about" },
+        { label: "Gift", url: "/gift" },
         { label: "Manage Subscriptions", url: process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com" },
     ]
 

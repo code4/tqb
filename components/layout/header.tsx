@@ -44,7 +44,7 @@ export async function Header() {
                     {(settings?.mainMenu || [
                         { label: 'Blog', url: '/blog' },
                         { label: 'About', url: '/about' },
-                        // { label: 'Sign In', url: process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL || "https://billing.stripe.com" }
+                        { label: 'Gift', url: '/gift' },
                     ]).map((link: any, idx: number) => (
                         link.url.startsWith('http') ? (
                             <a key={idx} href={link.url} className="relative text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 group">

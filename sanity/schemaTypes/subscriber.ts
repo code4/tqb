@@ -42,11 +42,55 @@ export const subscriber = defineType({
             type: 'datetime',
             initialValue: () => new Date().toISOString(),
         }),
+
+        // Gift fields
+        defineField({
+            name: 'isGift',
+            title: 'Is Gift Subscription?',
+            type: 'boolean',
+            initialValue: false,
+        }),
+        defineField({
+            name: 'giftRecipientName',
+            title: 'Gift Recipient Name',
+            type: 'string',
+            description: 'The name of the person this gift is for.',
+            hidden: ({ document }) => !document?.isGift,
+        }),
+        defineField({
+            name: 'giftMessage',
+            title: 'Gift Message',
+            type: 'text',
+            description: 'Personal message from the buyer (e.g. "Happy Birthday! From Sarah").',
+            hidden: ({ document }) => !document?.isGift,
+        }),
+        defineField({
+            name: 'gifterEmail',
+            title: 'Gifter Email',
+            type: 'string',
+            description: 'Email of the person who bought this gift.',
+            hidden: ({ document }) => !document?.isGift,
+        }),
+        defineField({
+            name: 'giftExpiresAt',
+            title: 'Gift Expires At',
+            type: 'datetime',
+            description: 'When this gift subscription period ends.',
+            hidden: ({ document }) => !document?.isGift,
+        }),
     ],
     preview: {
         select: {
             title: 'email',
             subtitle: 'tier',
+            isGift: 'isGift',
+        },
+        prepare({ title, subtitle, isGift }) {
+            return {
+                title: isGift ? `🎁 ${title}` : title,
+                subtitle: subtitle,
+            }
         },
     },
 })
+
