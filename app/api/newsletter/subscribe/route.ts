@@ -55,27 +55,18 @@ export async function POST(req: Request) {
             token: process.env.SANITY_API_TOKEN // Ensure write token is used
         })
 
-        try {
-            // Send the free tier welcome email
-            const { data, error } = await resend.emails.send({
-                // Note: Resend's free tier requires sending FROM onboarding@resend.dev 
-                // and TO your verified email address.
-                from: process.env.EMAIL_FROM || "The Quiet Bloom <onboarding@resend.dev>",
-                to: email,
-                subject: "Welcome to our quiet corner of the internet.",
-                react: NewsletterWelcomeEmail(),
-            })
-
-            if (error) {
-                console.error("Resend Delivery Error:", error)
-            } else {
-                console.log("Welcome email sent successfully:", data)
-            }
-        } catch (emailError) {
-            console.error("Welcome Email Sending Error:", emailError)
-        }
-
+        // ---------------------------------------------------------
+        // Resend Automation Handoff
+        // ---------------------------------------------------------
+        // We have gracefully removed the manual `resend.emails.send(...)` 
+        // dispatcher here. Because you are pasting the compiled HTML 
+        // directly into Resend, you should configure a "Resend Broadcast" 
+        // or a "Resend Automation" to automatically dispatch that HTML 
+        // template whenever a new contact is added to your Audience.
+        // This prevents users from receiving duplicate emails!
+        
         return NextResponse.json({ message: "Successfully subscribed" }, { status: 201 })
+
     } catch (error) {
         console.error("Newsletter Subscription Error:", error)
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
